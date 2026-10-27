@@ -1,0 +1,811 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#1f6f50">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="icon-192.png">
+<title>معدة رايقة | Balanced Gut</title>
+<style>
+:root{--g:#1f6f50;--g2:#2f8f68;--gl:#e7f4ed;--bg:#f5f7f4;--tx:#18261f;--mu:#5f6f67;--bd:#dce5df;--w:#fff;--amb:#b7791f;--aml:#fdf3dc;--red:#b42318;--rl:#fde8e6;--ok:#1f7a4d;--blue:#1d5f8a;--bl:#e5f1f8}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--tx);font-family:system-ui,-apple-system,"Segoe UI",Tahoma,Arial,sans-serif;line-height:1.65;padding-bottom:78px}
+header{background:linear-gradient(135deg,var(--g),var(--g2));color:#fff;padding:12px 16px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:6}
+header h1{font-size:18px;margin:0;letter-spacing:.3px}
+header button{background:rgba(255,255,255,.2);color:#fff;border:0;border-radius:999px;padding:6px 14px;font-size:13px}
+main{padding:14px;max-width:640px;margin:0 auto}
+.card{background:var(--w);border:1px solid var(--bd);border-radius:16px;padding:16px;margin-bottom:12px;box-shadow:0 1px 2px rgba(0,0,0,.03)}
+.card h2{font-size:17px;margin:0 0 8px}.card h3{font-size:15px;margin:12px 0 4px}
+.card p{margin:6px 0;color:var(--mu);font-size:14.5px}
+.hero{background:linear-gradient(135deg,var(--g),var(--g2));color:#fff;border:0}
+.hero h2,.hero p{color:#fff}.hero p{opacity:.92}
+.btn{display:block;width:100%;background:var(--g);color:#fff;border:0;border-radius:14px;padding:14px;font-size:16px;font-weight:600;margin-top:12px;text-align:center}
+.btn.alt{background:var(--gl);color:var(--g)}.btn.wht{background:#fff;color:var(--g)}
+.btn.sm{display:inline-block;width:auto;padding:8px 14px;font-size:13px;margin:0}
+.btn[disabled]{opacity:.45}
+.btns{display:flex;gap:10px}.btns .btn{flex:1}
+label.f{display:block;font-size:14px;margin:14px 0 6px;font-weight:600}
+input[type=number],input[type=date],input[type=text],select,textarea{width:100%;padding:12px;border:1px solid var(--bd);border-radius:12px;font-size:16px;background:#fff;color:var(--tx);font-family:inherit}
+.row{display:flex;gap:10px}.row>*{flex:1}
+nav{position:fixed;bottom:0;inset-inline:0;background:#fff;border-top:1px solid var(--bd);display:flex;z-index:6;padding-bottom:env(safe-area-inset-bottom)}
+nav button{flex:1;background:none;border:0;padding:8px 2px;font-size:11px;color:var(--mu)}
+nav button.on{color:var(--g);font-weight:700}nav span{display:block;font-size:20px}
+.opt{display:block;border:1.5px solid var(--bd);border-radius:12px;padding:11px 12px;margin:6px 0;cursor:pointer;font-size:15px;background:#fff}
+.opt.sel{border-color:var(--g);background:var(--gl);font-weight:600}
+.opts2{display:grid;grid-template-columns:1fr 1fr;gap:6px}.opts2 .opt{margin:0;text-align:center;padding:10px 6px;font-size:14px}
+.chip{display:inline-block;border:1.5px solid var(--bd);border-radius:999px;padding:6px 12px;margin:3px;font-size:13.5px;background:#fff;cursor:pointer}
+.chip.sel{background:var(--g);color:#fff;border-color:var(--g)}
+.q{font-size:15px;margin:16px 0 4px;font-weight:600}
+.prog{height:8px;background:var(--bd);border-radius:6px;overflow:hidden;margin:2px 0 6px}.prog i{display:block;height:100%;background:var(--g2);transition:width .3s}
+.stepno{font-size:12.5px;color:var(--mu)}
+.why{background:var(--bl);color:#14425f;border-radius:12px;padding:12px;font-size:13.5px;margin:10px 0}
+.why b{display:block;margin-bottom:2px}
+.warn{background:var(--aml);color:#6b4a0f;border-radius:12px;padding:12px;font-size:13.5px;margin:10px 0}
+.danger{background:var(--rl);color:#7a1b13;border-radius:12px;padding:12px;font-size:14px;margin:10px 0}
+.err{color:var(--red);font-size:13px;margin-top:8px}
+.big{font-size:30px;font-weight:700;color:var(--g)}
+.ring{display:flex;align-items:center;gap:16px}
+.ring svg{flex:none}
+.dom{margin:12px 0}.dom .top{display:flex;justify-content:space-between;font-size:14px;font-weight:600}
+.bar{height:10px;background:var(--bd);border-radius:6px;overflow:hidden;margin:5px 0}.bar i{display:block;height:100%}
+.good{color:var(--ok)}.fair{color:var(--amb)}.low{color:var(--red)}
+.bg-good{background:var(--ok)}.bg-fair{background:var(--amb)}.bg-low{background:var(--red)}
+.pill{display:inline-block;font-size:11.5px;border-radius:999px;padding:1px 9px;background:var(--gl);color:var(--g);margin-inline-end:4px}
+.act{display:flex;gap:10px;padding:10px 0;border-bottom:1px solid var(--bd);font-size:14.5px}.act:last-child{border:0}
+.act b.n{flex:none;width:24px;height:24px;border-radius:50%;background:var(--g);color:#fff;font-size:12.5px;display:flex;align-items:center;justify-content:center}
+.slide{text-align:center;padding:20px 8px}.slide .ic{font-size:54px}.slide h2{font-size:21px}.slide p{font-size:15.5px;text-align:start}
+.dots{text-align:center;margin:10px}.dots i{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--bd);margin:0 3px}.dots i.on{background:var(--g)}
+.cond{border-inline-start:4px solid var(--g2)}
+.bri{display:flex;align-items:center;gap:10px}.bri .gl{flex:none;width:54px;text-align:center;font-size:16px;color:#8a5a2b;letter-spacing:-2px}
+.langs .btn{font-size:20px;padding:18px}
+small{color:var(--mu)}
+table{width:100%;border-collapse:collapse;font-size:13px}td,th{padding:6px;border-bottom:1px solid var(--bd);text-align:start}
+.tag{font-size:11px;background:var(--gl);color:var(--g);border-radius:6px;padding:1px 6px;margin-inline-start:4px}
+.delta{font-size:12px;margin-inline-start:6px}
+details.rcp{background:#fff;border:1px solid var(--bd);border-radius:16px;padding:14px;margin-bottom:12px}
+details.rcp summary{cursor:pointer}details.rcp h3{margin:12px 0 4px;font-size:15px}
+details.rcp ul,details.rcp ol{margin:4px 0;padding-inline-start:22px;font-size:14.5px}details.rcp li{margin:3px 0}
+
+.stick{position:fixed;bottom:0;inset-inline:0;background:#fff;border-top:1px solid var(--bd);padding:10px 14px calc(10px + env(safe-area-inset-bottom));display:flex;gap:10px;z-index:7}
+.stick .btn{margin:0;flex:1;min-height:52px;font-size:17px}.stick .btn.alt{flex:.7;border:1.5px solid var(--g)}
+.navbtns{display:flex;gap:10px}.navbtns .btn{flex:1;min-height:52px;font-size:17px}.navbtns .btn.alt{flex:.7;border:1.5px solid var(--g)}
+details.why{background:var(--bl);color:#14425f;border-radius:12px;padding:10px 12px;font-size:14px;margin:8px 0}
+details.why summary{font-weight:600;cursor:pointer}
+.seg{display:flex;background:#e6ebe6;border-radius:12px;padding:3px;margin-bottom:12px;position:sticky;top:52px;z-index:5}
+.seg button{flex:1;border:0;background:none;padding:10px 2px;border-radius:10px;font-size:14px;color:var(--mu)}
+.seg button.on{background:#fff;color:var(--g);font-weight:700;box-shadow:0 1px 3px rgba(0,0,0,.12)}
+.scw{position:relative;margin:26px 0 4px}.scale{height:14px;border-radius:8px;display:flex;overflow:hidden}.scale i{display:block;height:100%}
+.mk{position:absolute;top:-20px;font-size:16px;margin-inline-start:-8px;color:var(--tx)}
+.scl{display:flex;font-size:11px;color:var(--mu);margin-bottom:8px}.scl span{text-align:start}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}.tile{text-align:center;font-weight:600;font-size:15px;margin-bottom:0;padding:18px 8px}.tile span{display:block;font-size:30px}
+.moods{display:flex;justify-content:space-between;gap:6px}.mood{flex:1;text-align:center;font-size:30px;padding:8px 0;border:2px solid var(--bd);border-radius:14px;cursor:pointer;background:#fff}.mood.sel{border-color:var(--g);background:var(--gl)}
+.opt{padding:14px 12px;font-size:16px}.chip{padding:8px 14px;font-size:14.5px}
+.q{font-size:16px}
+
+</style>
+</head>
+<body>
+<header><h1 id="ttl">Balanced Gut</h1><button id="langbtn" onclick="toggleLang()"></button></header>
+<main id="app"></main>
+<nav id="nav"></nav>
+<script>
+/* ============ state ============ */
+let S=JSON.parse(localStorage.getItem("gm2")||"null")||{lang:null,seen:false,ass:[],diary:[],draft:null,plan:null};
+const save=()=>{try{localStorage.setItem("gm2",JSON.stringify(S))}catch(e){}};
+const L=(a,e)=>S.lang==="ar"?a:e;
+const ARN=()=>S.lang==="ar"?"←":"→",ARB=()=>S.lang==="ar"?"→":"←";
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const ymd=d=>new Date(d.getTime()-d.getTimezoneOffset()*6e4).toISOString().slice(0,10);const today=()=>ymd(new Date());
+const fx=n=>(Math.round(n*10)/10).toString();
+let view="home",W={step:0,d:{},err:false},intro=0,tmp={},sel=new Set(),q="",resTab="sum",mealSel={b:0,l:0,s:0,d:0};
+
+/* ============ static content ============ */
+const INTRO=[
+ {ic:"🧠🦠",t:["أمعاؤك ومزاجك مرتبطان","Your gut and mood are linked"],
+  b:["الميكروبيوم (تريليونات البكتيريا في أمعائك) يتواصل مع المخ ويؤثر في المزاج والهضم والمناعة. الدراسات تربط الأكل الغني بالنباتات والألياف بتنوع أعلى فيه وبخطر أقل للاكتئاب والإمساك والسكري.",
+     "Your microbiome (trillions of gut bacteria) talks to the brain and affects mood, digestion and immunity. Studies link plant- and fiber-rich eating with higher microbiome diversity and a lower risk of depression, constipation and diabetes."]},
+ {ic:"🛡️",t:["القياس المبكر وقاية","Early checks prevent problems"],
+  b:["التقييم يكشف الثغرات في أكلك ونومك وهضمك ومزاجك قبل أن تتحول إلى مشكلة، ويعطيك خطوات صغيرة تطبقها من أكل بيتك.",
+     "The assessment shows gaps in your eating, sleep, digestion and mood before they become a problem, and gives you small steps using everyday home food."]},
+ {ic:"✅",t:["7 خطوات وتحصل على خطتك","7 steps to your plan"],
+  b:["حوالي 7 دقائق، وبعدها: حالتك حسب BMI، نتيجة في 4 محاور، خطة تحسين، ووجبات مصرية مقترحة تناسب حالتك.\n\nفحص مبدئي وتثقيف وليس تشخيصًا.",
+     "About 7 minutes, then you get: your BMI category, a result in 4 areas, an improvement plan and Egyptian meal suggestions that fit your condition.\n\nPreliminary screening and education, not a diagnosis."]}
+];
+const FREQ=[[0,["نادرًا / أبدًا","Rarely / never"]],[1,["1–2 يوم أسبوعيًا","1–2 days/week"]],[2,["3–5 أيام أسبوعيًا","3–5 days/week"]],[3,["يوميًا","Daily"]]];
+const WATER=[[0,["أقل من 3 أكواب","Under 3 cups"]],[1,["3–5 أكواب","3–5 cups"]],[2,["6–7 أكواب","6–7 cups"]],[3,["8 أكواب أو أكثر","8 cups or more"]]];
+const DIET=[
+ ["veg",["الخضار (ملوخية، سبانخ، بامية، سلطة...)","Vegetables (molokhia, spinach, okra, salad...)"],1,
+  ["زيادة الخضار إلى حوالي 5 حصص يوميًا وتنويع أنواعها (ملوخية، سبانخ، بامية، جرجير، كرنب).","Aim for about 5 vegetable servings a day and vary them (molokhia, spinach, okra, rocket, cabbage)."]],
+ ["fruit",["الفاكهة","Fruit"],1,
+  ["فاكهة يوميًا وبقشرها إن أمكن (جوافة، تفاح، برتقال، رمان).","Eat fruit daily, with the peel when possible (guava, apple, orange, pomegranate)."]],
+ ["legu",["البقوليات (فول، عدس، حمص)","Legumes (ful, lentils, chickpeas)"],1,
+  ["بقوليات 4 أيام أسبوعيًا على الأقل (فول مدمس، عدس، حمص): مصدر ممتاز للألياف والبريبايوتك.","Legumes at least 4 days a week (ful, lentils, chickpeas): a great source of fiber and prebiotics."]],
+ ["whole",["الحبوب الكاملة (عيش بلدي، شوفان، فريك، أرز بني)","Whole grains (baladi bread, oats, freekeh, brown rice)"],1,
+  ["استبدال جزء من الأرز والعيش الأبيض بعيش بلدي أو شوفان أو فريك أو أرز بني.","Swap part of the white rice and white bread for baladi bread, oats, freekeh or brown rice."]],
+ ["ferm",["الأطعمة المخمّرة (زبادي، لبن رايب، مخلل طبيعي)","Fermented foods (yogurt, rayeb, natural pickles)"],1,
+  ["إضافة زبادي أو لبن رايب أو مخلل متخمّر طبيعيًا يوميًا لدعم تنوع الميكروبيوم.","Add yogurt, rayeb or naturally fermented pickles daily to support microbiome diversity."]],
+ ["nuts",["المكسرات والبذور والطحينة","Nuts, seeds and tahini"],1,
+  ["حفنة (حوالي 30 جم) من المكسرات أو البذور بدل الحلويات.","A handful (about 30 g) of nuts or seeds instead of sweets."]],
+ ["water",["كم كوب ماء تشرب في اليوم؟ (الكوب حوالي 250 مل)","How many cups of water do you drink per day? (a cup is about 250 ml)"],1,
+  ["شرب حوالي 8 أكواب ماء يوميًا، خصوصًا عند زيادة الألياف.","Drink about 8 cups of water a day, especially as you add fiber."]],
+ ["fried",["المقليات والوجبات السريعة","Fried and fast food"],0,
+  ["تقليل المقليات والوجبات السريعة إلى أقل من مرتين أسبوعيًا.","Keep fried and fast food under twice a week."]],
+ ["sweet",["الحلويات والمشروبات المحلاة والغازية","Sweets and sugary or fizzy drinks"],0,
+  ["استبدال المشروبات الغازية والعصائر المحلاة بالماء أو الشاي أو القهوة بسكر أقل.","Replace fizzy and sweetened drinks with water, or tea/coffee with less sugar."]]
+];
+const BR=[
+ ["●  ●  ●",["قطع صلبة منفصلة","Separate hard lumps"]],["▰▰▰",["شكل سجق متكتل","Lumpy sausage"]],["▬▬▬",["سجق بشقوق على السطح","Sausage with surface cracks"]],["━━━",["سجق أملس وناعم","Smooth, soft sausage"]],["◖◗ ◖◗",["قطع ليّنة بحواف واضحة","Soft blobs with clear edges"]],["∿∿∿",["قطع هشة رخوة","Mushy, fluffy pieces"]],["≈≈≈",["سائل بلا قطع صلبة","Watery, no solid pieces"]]
+];
+const SYM=[["bloat",["انتفاخ","Bloating"]],["pain",["ألم أو تقلصات بالبطن","Abdominal pain/cramps"]],["gas",["غازات زائدة","Excess gas"]],["nausea",["غثيان","Nausea"]],["heart",["حرقان أو ارتجاع","Heartburn/reflux"]]];
+const RF=[["blood",["دم في البراز","Blood in stool"]],["black",["براز أسود قطراني","Black, tarry stool"]],["night",["ألم أو إسهال يوقظك من النوم","Pain or diarrhea that wakes you at night"]],["swallow",["صعوبة في البلع","Trouble swallowing"]],["vomit",["قيء متكرر","Repeated vomiting"]],["change",["تغيّر في عادات الإخراج لأكثر من أسبوعين","Bowel habit change lasting over 2 weeks"]]];
+const COND=[
+ {id:"ibs",n:["القولون العصبي (IBS)","Irritable bowel syndrome (IBS)"],
+  rel:["يرتبط في الدراسات باختلاف في تنوع الميكروبيوم وفي طريقة تخمّر الأكل، ومحور الأمعاء-المخ يلعب دورًا كبيرًا، ولهذا يتداخل القولون العصبي كثيرًا مع القلق والاكتئاب.","Studies link IBS to differences in microbiome diversity and fermentation patterns, and the gut-brain axis plays a big role, which is why IBS often overlaps with anxiety and depression."],
+  help:["تجربة غذائية بإشراف أخصائي تغذية (مثل نظام قليل الفودماب ثم إعادة الإدخال التدريجي)، وجبات منتظمة، ألياف ذائبة (شوفان، سيليوم)، وإدارة التوتر.","A dietitian-guided approach (such as a low-FODMAP trial followed by gradual reintroduction), regular meals, soluble fiber (oats, psyllium) and stress management."],gi:1},
+ {id:"ibd",n:["أمراض الالتهاب المعوي (كرون / قولون تقرحي)","Inflammatory bowel disease (Crohn's / ulcerative colitis)"],
+  rel:["يُلاحظ عادة انخفاض تنوع الميكروبيوم ونقص البكتيريا المنتجة للأحماض الدهنية قصيرة السلسلة، وتتفاعل الميكروبات مع جهاز المناعة في الالتهاب.","Lower microbial diversity and fewer short-chain-fatty-acid–producing bacteria are commonly reported, and microbes interact with the immune system in inflammation."],
+  help:["المتابعة مع طبيب الجهاز الهضمي، والتغذية تختلف في النوبات عن فترات الهدوء، فاسأل أخصائي التغذية قبل زيادة الألياف.","Follow up with your gastroenterologist; diet differs between flares and remission, so ask a dietitian before raising fiber."],caut:["لا توقف أدويتك دون الرجوع لطبيبك.","Never stop medication without your doctor."],gi:1},
+ {id:"celiac",n:["الداء الزلاقي (حساسية الجلوتين)","Celiac disease"],
+  rel:["الجلوتين يسبب تلفًا مناعيًا بالأمعاء الدقيقة، وتُرصد تغيرات في الميكروبيوم قد يتحسن جزء منها مع الالتزام بنظام خالٍ من الجلوتين.","Gluten triggers immune damage in the small intestine; microbiome changes are reported and may partly improve on a strict gluten-free diet."],
+  help:["الالتزام الصارم بنظام خالٍ من الجلوتين، والاعتماد على مصادر ألياف طبيعية خالية منه (بقوليات، خضار، أرز بني، كينوا).","Strict gluten-free eating, getting fiber from naturally gluten-free sources (legumes, vegetables, brown rice, quinoa)."],gi:1,celiac:1},
+ {id:"const",n:["الإمساك المزمن","Chronic constipation"],
+  rel:["بطء حركة الأمعاء يرتبط باختلاف في الميكروبيوم وبانخفاض إنتاج الأحماض الدهنية قصيرة السلسلة، والألياف والسوائل والحركة تحسّن الوضع عادة.","Slow gut transit is linked to a different microbiome and lower short-chain fatty acid production; fiber, fluids and activity usually help."],
+  help:["زيادة الألياف تدريجيًا مع الماء، حركة يومية، وروتين ثابت لدخول الحمام.","Raise fiber gradually with water, move daily and keep a regular toilet routine."]},
+ {id:"obes",n:["السمنة وزيادة الوزن","Obesity / overweight"],
+  rel:["ترتبط السمنة بانخفاض تنوع الميكروبيوم وتغيّر طريقة استخلاص الطاقة من الأكل. النمط الغذائي يشكّل الميكروبيوم، ودور الميكروبيوم كسبب ما زال قيد الدراسة.","Obesity is linked to lower diversity and altered energy extraction from food. Diet shapes the microbiome; whether it is a cause is still being studied."],
+  help:["خسارة وزن تدريجية (5–10%) مع نمط غني بالألياف والنباتات وتقليل المحلّيات والمقليات.","Gradual weight loss (5–10%) with a fiber- and plant-rich pattern, and fewer sweets and fried foods."]},
+ {id:"t2d",n:["السكري أو مقاومة الإنسولين","Diabetes / insulin resistance"],
+  rel:["ارتبط السكري من النوع الثاني بنقص البكتيريا المنتجة للبيوتيرات وباضطراب الحاجز المعوي. الأنظمة الغنية بالألياف والبقوليات تحسّن ضبط السكر.","Type 2 diabetes is linked to fewer butyrate-producing bacteria and a weaker gut barrier. Fiber- and legume-rich diets improve glucose control."],
+  help:["ألياف وبقوليات وحبوب كاملة بدل السكريات المكررة.","Fiber, legumes and whole grains instead of refined sugars."],caut:["نسّق تغييرات الأكل مع طبيبك، خصوصًا لو تستخدم إنسولين أو أدوية خافضة للسكر.","Coordinate diet changes with your doctor, especially if you use insulin or glucose-lowering drugs."]},
+ {id:"nafld",n:["الكبد الدهني","Fatty liver"],
+  rel:["محور الأمعاء-الكبد: مواد من بكتيريا الأمعاء تصل للكبد عبر الوريد البابي وقد تزيد الالتهاب والدهون.","Gut-liver axis: products of gut bacteria reach the liver through the portal vein and may increase inflammation and fat."],
+  help:["إنقاص الوزن، تقليل السكريات والمشروبات المحلاة، نمط متوسطي، ونشاط بدني منتظم.","Weight loss, fewer sugars and sweetened drinks, a Mediterranean-style pattern and regular activity."]},
+ {id:"htn",n:["ضغط الدم أو أمراض القلب","High blood pressure / heart disease"],
+  rel:["تُدرس نواتج الميكروبيوم (مثل الأحماض الدهنية قصيرة السلسلة وTMAO) في علاقتها بالضغط وخطر القلب. الأنظمة النباتية الغنية بالألياف والقليلة الملح ارتبطت بخطر أقل.","Microbiome products (like short-chain fatty acids and TMAO) are studied in relation to blood pressure and heart risk. Plant-rich, high-fiber, low-salt patterns are linked to lower risk."],
+  help:["خضار وبقوليات وزيت زيتون وتقليل الملح والمخللات الجاهزة والأطعمة المصنّعة.","Vegetables, legumes, olive oil, and less salt, commercial pickles and processed food."]},
+ {id:"dep",n:["اكتئاب أو قلق مشخّص","Diagnosed depression / anxiety"],
+  rel:["محور الأمعاء-المخ: رُصدت اختلافات في الميكروبيوم لدى المصابين، وأظهرت تجارب أن تحسين جودة الغذاء بجانب العلاج قد يخفف الأعراض.","Gut-brain axis: microbiome differences have been reported, and trials show better diet quality alongside treatment may ease symptoms."],
+  help:["نمط متوسطي، نوم منتظم، نشاط بدني، وتناول الألياف والأطعمة المخمّرة.","A Mediterranean-style pattern, regular sleep, physical activity, fiber and fermented foods."],caut:["الغذاء مكمّل للعلاج وليس بديلًا عنه، ولا توقف دواءك دون طبيبك.","Food complements treatment and does not replace it; never stop medication without your doctor."]},
+ {id:"allergy",n:["حساسية أو إكزيما أو ربو","Allergy / eczema / asthma"],
+  rel:["الميكروبيوم في الطفولة المبكرة «يدرّب» الجهاز المناعي، وانخفاض التنوع ارتبط بالأمراض التحسسية. أدلة علاج البالغين بالبروبيوتيك متضاربة.","Early-life microbiome \"trains\" the immune system, and lower diversity is linked to allergic disease. Evidence for treating adults with probiotics is mixed."],
+  help:["تنوع غذائي وأطعمة مخمّرة وألياف، مع المتابعة مع طبيب الحساسية.","Dietary variety, fermented foods and fiber, with follow-up by an allergy specialist."]},
+ {id:"pcos",n:["تكيّس المبايض","PCOS"],
+  rel:["تُظهر دراسات انخفاض تنوع الميكروبيوم وارتباطًا بمقاومة الإنسولين والهرمونات الذكرية.","Studies report lower microbiome diversity and links to insulin resistance and androgen levels."],
+  help:["ألياف وبقوليات وحبوب كاملة، ضبط الوزن، ونشاط بدني.","Fiber, legumes, whole grains, weight management and physical activity."]},
+ {id:"abx",n:["تناول مضادات حيوية خلال آخر 3 شهور","Antibiotics in the last 3 months"],
+  rel:["المضادات الحيوية قد تخفض تنوع الميكروبيوم مؤقتًا وتسبب إسهالًا، وأحيانًا عدوى C. difficile. التعافي يحتاج أسابيع إلى شهور.","Antibiotics can temporarily reduce microbiome diversity and cause diarrhea, and sometimes C. difficile infection. Recovery takes weeks to months."],
+  help:["ألياف متنوعة وأطعمة مخمّرة، وتجنّب المضادات الحيوية دون وصفة.","Varied fiber and fermented foods, and avoiding antibiotics without a prescription."]},
+ {id:"ckd",n:["مرض الكلى المزمن","Chronic kidney disease"],
+  rel:["ترتبط الميكروبات بإنتاج سموم يوريمية تتراكم عند ضعف الكلى، والتغذية هنا تحتاج ضبطًا دقيقًا.","Gut microbes produce uremic toxins that build up when kidneys are weak, and nutrition here needs careful tailoring."],
+  help:["تغذية فردية مع أخصائي كلى.","Individualised nutrition with a kidney dietitian."],caut:["البوتاسيوم والفوسفور قد يحتاجان تقييدًا، فلا تغيّر الأكل (بقوليات، موز، مكسرات) إلا بعد استشارة الطبيب.","Potassium and phosphorus may need restriction; do not change your diet (legumes, bananas, nuts) before consulting your doctor."],ckd:1}
+];
+const CM=Object.fromEntries(COND.map(c=>[c.id,c]));
+/* foods: id, ar, en, type, fiber/100g, serving g, flags */
+const F=[["ful","فول مدمس","Ful medames","legume",5.4,150,"p"],["lent","عدس","Lentils","legume",7.9,150,"p"],["chick","حمص","Chickpeas","legume",7.6,100,"p"],["lup","ترمس","Lupini beans","legume",4.6,100,""],["fal","طعمية","Ta'amiya (falafel)","legume",5,80,""],["kosh","كشري","Koshari","mixed",3,300,""],
+["molo","ملوخية","Molokhia","veg",3,200,""],["okra","بامية","Okra","veg",3.2,150,""],["spin","سبانخ","Spinach","veg",2.4,150,""],["egg","باذنجان","Eggplant","veg",2.5,150,""],["tom","طماطم","Tomato","veg",1.2,100,""],["cuc","خيار","Cucumber","veg",.5,100,""],["car","جزر","Carrot","veg",2.8,80,""],["cab","كرنب","Cabbage","veg",2.5,100,""],["roc","جرجير","Rocket","veg",1.6,30,""],["taro","قلقاس","Taro","veg",4.1,150,""],["swp","بطاطا","Sweet potato","veg",3,150,""],["pea","بسلة","Green peas","veg",5.1,100,""],["gb","فاصوليا خضراء","Green beans","veg",3.4,100,""],["zuc","كوسة","Zucchini","veg",1,150,""],["pick","مخلل (طرشي)","Pickled vegetables","veg",1,50,"f"],
+["gar","ثوم","Garlic","herb",2.1,5,"p"],["onion","بصل","Onion","veg",1.7,50,"p"],["leek","كراث","Leek","veg",1.8,50,"p"],["pars","بقدونس","Parsley","herb",3.3,10,""],["mint","نعناع","Mint","herb",8,5,""],
+["baladi","عيش بلدي","Baladi bread","grain",5,100,""],["rice","أرز أبيض","White rice","grain",.4,150,""],["brice","أرز بني","Brown rice","grain",1.8,150,""],["oat","شوفان","Oats","grain",10,40,"p"],["freek","فريك","Freekeh","grain",4,150,""],
+["date","بلح / تمر","Dates","fruit",8,30,""],["fig","تين","Figs","fruit",2.9,100,""],["guava","جوافة","Guava","fruit",5.4,100,""],["orange","برتقال","Orange","fruit",2.4,130,""],["banana","موز","Banana","fruit",2.6,100,"p"],["apple","تفاح","Apple","fruit",2.4,150,""],["pom","رمان","Pomegranate","fruit",4,100,""],["mango","مانجو","Mango","fruit",1.6,150,""],
+["pnut","فول سوداني","Peanuts","nut",8.5,30,""],["alm","لوز","Almonds","nut",12.5,30,""],["tahini","طحينة","Tahini","nut",9.3,15,""],
+["yog","زبادي","Yogurt","dairy",0,150,"f"],["rayeb","لبن رايب","Rayeb milk","dairy",0,200,"f"],
+["eggs","بيض","Eggs","other",0,60,""],["fish","سمك","Fish","other",0,150,""],["chk","فراخ","Chicken","other",0,120,""],["meat","لحمة","Red meat","other",0,100,""]
+].map(a=>({id:a[0],ar:a[1],en:a[2],type:a[3],fib:a[4],srv:a[5],fl:a[6]}));
+/* approximate kcal per 100 g as eaten (general tables, cooked values where relevant); excludes added cooking oil and dressings */
+const KC={ful:110,lent:116,chick:164,lup:120,fal:330,kosh:160,molo:50,okra:35,spin:25,egg:35,tom:18,cuc:15,car:41,cab:25,roc:25,taro:140,swp:90,pea:80,gb:31,zuc:17,pick:15,gar:149,onion:40,leek:61,pars:36,mint:70,baladi:270,rice:130,brice:112,oat:380,freek:125,date:282,fig:74,guava:68,orange:47,banana:89,apple:52,pom:83,mango:60,pnut:567,alm:579,tahini:595,yog:61,rayeb:60,eggs:143,fish:140,chk:165,meat:230};F.forEach(f=>{f.kcal=KC[f.id]});
+const FM=Object.fromEntries(F.map(f=>[f.id,f]));
+const PLANT=new Set(["legume","veg","grain","fruit","nut","herb"]);
+const TYPES={legume:["بقوليات","Legumes"],veg:["خضار","Vegetables"],grain:["حبوب","Grains"],fruit:["فاكهة","Fruit"],nut:["مكسرات وبذور","Nuts & seeds"],herb:["أعشاب","Herbs"],dairy:["ألبان مخمّرة","Fermented dairy"],other:["أخرى","Other"],mixed:["وجبة مختلطة","Mixed dish"]};
+const PHQ=[["القليل من الاهتمام أو المتعة في القيام بالأشياء.","Little interest or pleasure in doing things"],["الشعور بالإحباط أو الاكتئاب أو اليأس.","Feeling down, depressed, or hopeless"],["صعوبة في النوم أو الاستمرار في النوم أو النوم كثيرًا.","Trouble falling or staying asleep, or sleeping too much"],["الشعور بالتعب أو قلة الطاقة.","Feeling tired or having little energy"],["ضعف الشهية أو الإفراط في تناول الطعام.","Poor appetite or overeating"],["الشعور بالسوء تجاه نفسك — أو أنك فاشل أو خذلت نفسك أو عائلتك.","Feeling bad about yourself — or that you are a failure or have let yourself or your family down"],["صعوبة في التركيز على الأشياء، مثل قراءة الصحف أو مشاهدة التلفزيون.","Trouble concentrating on things, such as reading the newspaper or watching television"],["هل تتحرك أو تتحدث ببطء لدرجة أن الآخرين قد لاحظوا؟ أو العكس — أن تكون متململًا أو مضطربًا لدرجة أنك كنت تتحرك أكثر بكثير من المعتاد.","Moving or speaking so slowly that other people could have noticed? Or the opposite — being so fidgety or restless that you have been moving around a lot more than usual"],["أفكار أنه سيكون من الأفضل لك الموت أو إيذاء نفسك بطريقة ما.","Thoughts that you would be better off dead or of hurting yourself in some way"]];
+const PHQO=[[0,["أبدًا","Not at all"]],[1,["عدة أيام","Several days"]],[2,["أكثر من نصف الأيام","More than half the days"]],[3,["تقريبًا كل يوم","Nearly every day"]]];
+const PHQ10=[[0,["ليس صعبًا على الإطلاق","Not difficult at all"]],[1,["صعب إلى حد ما","Somewhat difficult"]],[2,["صعب جدًا","Very difficult"]],[3,["صعب للغاية","Extremely difficult"]]];
+
+/* ============ helpers ============ */
+const pk=a=>S.lang==="ar"?a[0]:a[1];
+function persist(){S.draft={step:W.step,d:W.d};save()}
+function setv(k,v){W.d[k]=v;persist()}
+function pick(k,v){W.d[k]=v;persist();keep()}
+function tog(k,v,excl){const a=W.d[k]=W.d[k]||[];const i=a.indexOf(v);
+ if(i>=0)a.splice(i,1);else{if(excl&&v==="none")a.length=0;else if(excl){const j=a.indexOf("none");if(j>=0)a.splice(j,1)}a.push(v)}persist();keep()}
+function setA(k,i,v,n){const a=W.d[k]=W.d[k]||Array(n).fill(null);a[i]=v;persist();keep()}
+function keep(){const y=scrollY;render();scrollTo(0,y)}
+function opts(k,list,grid){return `<div class="${grid?"opts2":""}">`+list.map(([v,l])=>`<label class="opt ${W.d[k]===v?"sel":""}" onclick="pick('${k}','${v}')">${pk(l)}</label>`).join("")+`</div>`}
+function chips(k,list,excl){const a=W.d[k]||[];return list.map(([v,l])=>`<span class="chip ${a.includes(v)?"sel":""}" onclick="tog('${k}','${v}',${excl?1:0})">${pk(l)}</span>`).join("")}
+function numIn(k,ph){return `<input type="number" inputmode="decimal" value="${W.d[k]??""}" placeholder="${ph||""}" oninput="setv('${k}',this.value)">`}
+function arrOk(a,n){return Array.isArray(a)&&Array.from({length:n}).every((_,i)=>a[i]!=null)}
+function level(s){return s>=80?"good":s>=60?"fair":"low"}
+function levelTxt(s){return s>=80?L("جيد","Good"):s>=60?L("متوسط","Fair"):L("يحتاج اهتمام","Needs attention")}
+
+/* ============ scoring ============ */
+function compute(d){
+ const h=+d.h,w=+d.w,wa=parseFloat(d.wa),preg=d.preg==="1";
+ const bmi=w/((h/100)**2);
+ const male=d.sex==="m";
+ const waistHigh=!isNaN(wa)&&wa>=(male?94:80);
+ let body=bmi<18.5?50:bmi<25?100:bmi<30?70:40;if(waistHigh)body=Math.max(0,body-15);
+ const must=(bmi>20?0:bmi>=18.5?1:2)+(+d.loss||0)+(+d.acute||0);
+ const dv=d.diet.map(Number);let sum=0;dv.forEach((v,i)=>sum+=DIET[i][2]?v:3-v);
+ const dietPct=sum/27*100;
+ const nutrition=preg?dietPct:0.6*dietPct+0.4*body;
+ const bs={1:45,2:70,3:100,4:100,5:70,6:45,7:30}[d.bt];
+ const fr={a:50,b:100,c:100,d:60}[d.freq];
+ const sc=(d.sym||[]).filter(x=>x!=="none").length;
+ const gut=0.5*bs+0.2*fr+0.3*Math.max(0,100-sc*20);
+ const red=(d.rf||[]).filter(x=>x!=="none");if(+d.loss===2&&!red.includes("loss"))red.push("loss");
+ const phq=d.phq.reduce((a,b)=>a+Number(b),0),i9=Number(d.phq[8])>0;
+ const mood=phq<5?100:phq<10?75:phq<15?50:phq<20?30:15;
+ const sl={a:40,b:70,c:100,d:70}[d.sleep],ac={0:20,1:50,2:80,3:100}[d.act],sm={0:100,1:60,2:30}[d.smoke],st=[0,100,80,60,40,20][+d.stress];
+ const life=(sl+ac+sm+st)/4;
+ const overall=(nutrition+gut+mood+life)/4;
+ return {bmi,body,waistHigh,must,dietPct,nutrition,gut,phq,i9,mood,life,overall,red,preg,dv,sc};
+}
+function phqLabel(s){return s<5?L("أعراض ضئيلة","Minimal symptoms"):s<10?L("أعراض خفيفة","Mild symptoms"):s<15?L("أعراض متوسطة","Moderate symptoms"):s<20?L("أعراض متوسطة إلى شديدة","Moderately severe symptoms"):L("أعراض شديدة","Severe symptoms")}
+function bmiCat(b){return b<18.5?L("نقص وزن","Underweight"):b<25?L("وزن طبيعي","Normal weight"):b<30?L("زيادة وزن","Overweight"):L("سمنة","Obesity")}
+
+/* ============ plan ============ */
+function buildPlan(d,r){
+ const cond=d.cond||[],has=id=>cond.includes(id);
+ const ckd=has("ckd"),gi=cond.some(c=>CM[c]&&CM[c].gi),celiac=has("celiac");
+ const out=[];const add=(p,a,e)=>out.push({p,t:[a,e]});
+ if(ckd)add(100,"لديك مرض كلى: استشر طبيبك أو أخصائي كلى قبل أي تغيير غذائي (بقوليات، فاكهة، مكسرات)، فالخطة الغذائية العامة قد لا تناسبك.","You have kidney disease: check with your doctor or renal dietitian before any diet change (legumes, fruit, nuts); general diet advice may not suit you.");
+ if(r.i9||r.phq>=20)add(99,"التواصل مع مختص نفسي أو طبيب في أقرب وقت. هذا أهم إجراء الآن.","Contact a mental health professional or doctor as soon as possible. This is the most important step now.");
+ else if(r.phq>=15)add(95,"نتيجة المزاج مرتفعة: يُنصح بحجز موعد مع مختص نفسي خلال أسابيع قليلة.","Your mood score is high: book an appointment with a mental health professional within a few weeks.");
+ else if(r.phq>=10)add(85,"نتيجة المزاج متوسطة: يُنصح بمراجعة مختص نفسي أو طبيب، مع تطبيق خطوات النوم والنشاط والغذاء.","Your mood score is moderate: see a mental health professional or doctor, and apply the sleep, activity and food steps.");
+ else if(r.phq>=5)add(40,"أعراض مزاج خفيفة: تنشيط سلوكي بسيط (نشاط ممتع يوميًا ومشي وتواصل اجتماعي) مع تحسين النوم والغذاء، وإعادة الفحص بعد 3 شهور (أو أبكر لو ساءت الأعراض).","Mild mood symptoms: simple behavioral activation (a pleasant activity daily, walking, social contact) plus better sleep and food, and re-check in 3 months (sooner if symptoms worsen).");
+ if(r.red.length)add(98,"ظهرت علامات تحذيرية في الهضم أو الوزن: يُنصح بمراجعة الطبيب قريبًا قبل أي تغيير غذائي.","Warning signs appeared in digestion or weight: see a doctor soon, before any diet change.");
+ if(r.must>=2)add(90,"خطر سوء تغذية مرتفع (MUST): مراجعة أخصائي تغذية أو طبيب.","High malnutrition risk (MUST): see a dietitian or doctor.");
+ else if(r.must===1)add(50,"خطر سوء تغذية متوسط: راقب أكلك ووزنك وأعد التقييم.","Medium malnutrition risk: monitor your intake and weight and re-screen.");
+ if(!r.preg){
+  if(r.bmi>=25)add(60,"زيادة الوزن: إنقاص تدريجي 5–10% يحسّن السكر والضغط والميكروبيوم، مع التركيز على جودة الأكل وليس الحرمان.","Excess weight: gradual loss of 5–10% improves blood sugar, blood pressure and the microbiome; focus on food quality rather than deprivation.");
+  if(r.bmi<18.5)add(70,"نقص الوزن: استشر أخصائي تغذية لزيادة الطاقة والبروتين بأكل مغذٍّ.","Underweight: consult a dietitian to raise energy and protein with nutritious food.");
+  if(r.waistHigh&&r.bmi<25)add(45,"محيط الوسط مرتفع: حركة منتظمة وتقليل السكريات يخفضان دهون البطن.","High waist: regular movement and fewer sugars reduce belly fat.");
+ }
+ if(!ckd){
+  const gradual=gi?L(" (بالتدريج وبإشراف أخصائي تغذية بسبب حالتك الهضمية)"," (gradually and with a dietitian because of your gut condition)"):"";
+  DIET.forEach((it,i)=>{const v=r.dv[i];const gap=it[2]?(3-v):v;if(gap>=2){
+   let a=it[3][0],e=it[3][1];
+   if(celiac&&it[0]==="whole"){a="حبوب كاملة خالية من الجلوتين (أرز بني، كينوا، ذرة).";e="Gluten-free whole grains (brown rice, quinoa, corn).";}
+   else if(gi&&["veg","legu","whole"].includes(it[0])){a+=gradual;e+=gradual;}
+   add(30+gap*8,a,e)}});
+ }
+ if(r.gut<75&&!r.red.length){
+  const bt=+d.bt;
+  if(bt<=2)add(55,"لتحسين الإمساك: ألياف تدريجية مع الماء، حركة يومية، وروتين ثابت للحمام بعد الوجبات.","For constipation: add fiber gradually with water, move daily and keep a regular toilet routine after meals.");
+  if(bt>=6)add(55,"لتحسين الليونة والإسهال: تسجيل الأطعمة المحفزة في المفكرة وشرب سوائل كافية، ومراجعة الطبيب لو استمر أكثر من أسبوعين.","For loose stools: log trigger foods in the diary, keep hydrated, and see a doctor if it lasts over 2 weeks.");
+  if(r.sc>0)add(35,"تسجيل الأعراض والأكل في المفكرة لمدة أسبوعين لاكتشاف الأنماط.","Log symptoms and food in the diary for two weeks to spot patterns.");
+ }
+ if(has("abx")&&!ckd)add(38,"بعد المضادات الحيوية: ألياف متنوعة وأطعمة مخمّرة يوميًا لدعم تعافي الميكروبيوم.","After antibiotics: varied fiber and daily fermented foods to help the microbiome recover.");
+ const sl=d.sleep;if(sl==="a")add(62,"النوم أقل من 6 ساعات: ثبّت موعد النوم والاستيقاظ وقلل الشاشات قبل النوم. قلة النوم ترتبط بسوء المزاج وبتغير الميكروبيوم.","Under 6 hours of sleep: fix your sleep and wake times and cut screens before bed. Short sleep is linked to worse mood and microbiome changes.");
+ else if(sl==="d")add(30,"النوم أكثر من 9 ساعات باستمرار قد يرتبط بأعراض اكتئابية، فتابع الأمر.","Regularly sleeping over 9 hours can go with low mood, so keep an eye on it.");
+ if(+d.act<=1)add(58,"النشاط البدني: ابدأ بمشي 30 دقيقة، 3 أيام أسبوعيًا ثم زِد تدريجيًا إلى 150 دقيقة أسبوعيًا. النشاط يحسّن المزاج وحركة الأمعاء.","Physical activity: start with a 30-minute walk 3 days a week, building up to 150 minutes weekly. Activity improves mood and gut motility.");
+ if(+d.stress>=4)add(52,"التوتر مرتفع: تنفس بطيء 5 دقائق يوميًا، فترات راحة، والحديث مع شخص تثق به. التوتر يؤثر على الأمعاء مباشرة.","High stress: 5 minutes of slow breathing daily, breaks, and talking to someone you trust. Stress affects the gut directly.");
+ if(+d.smoke>=1)add(48,"التدخين: الإقلاع يفيد الهضم والمزاج والقلب، واطلب مساعدة عيادة إقلاع لو احتجت.","Smoking: quitting helps digestion, mood and heart; ask a cessation clinic for support if needed.");
+ if(!ckd&&r.dietPct<80)add(20,"هدف أسبوعي: الوصول إلى 30 نوع نبات مختلف في الأسبوع (خضار وفاكهة وبقوليات وحبوب ومكسرات وأعشاب وتوابل) وحوالي 25 جم ألياف يوميًا.","Weekly goal: reach 30 different plant types a week (vegetables, fruit, legumes, grains, nuts, herbs, spices) and about 25 g fiber a day.");
+ return out.sort((a,b)=>b.p-a.p);
+}
+
+/* ============ wizard steps ============ */
+const STEPS=[
+ {ic:"👤",t:["عنك","About you"],
+  why:["السن والنوع يحددان الحدود المرجعية (مثل محيط الوسط) ويضمنان أن الفحص مناسب لك. هذا الفحص مصمم للبالغين.","Age and sex set the reference limits (such as waist cut-offs) and make sure the screening suits you. This screening is designed for adults."],
+  r(){const d=W.d;return `<label class="f">${L("النوع","Sex")}</label>`+opts("sex",[["f",["أنثى","Female"]],["m",["ذكر","Male"]]],1)+
+   `<label class="f">${L("السن (سنة)","Age (years)")}</label>`+numIn("age")+(d.age&&+d.age<18?`<div class="danger">${L("هذا التطبيق مصمم للبالغين (18 سنة فأكثر). لو عمرك أقل، يرجى استشارة طبيب أو أخصائي.","This app is designed for adults (18+). If you are younger, please consult a doctor or specialist.")}</div>`:"")+
+   `<label class="f">${L("هل أنت حامل أو مرضعة؟","Are you pregnant or breastfeeding?")}</label>`+opts("preg",[["0",["لا","No"]],["1",["نعم","Yes"]]],1)},
+  v(){const d=W.d;return d.sex&&+d.age>=18&&+d.age<=110&&d.preg!=null}},
+ {ic:"📏",t:["جسمك","Your body"],
+  why:["مؤشر كتلة الجسم ومحيط الوسط يكشفان الخطر الأيضي مبكرًا، وفقدان الوزن غير المقصود قد يكون علامة تحتاج متابعة. السمنة والنحافة الزائدة كلاهما مرتبط باختلال الميكروبيوم.","BMI and waist reveal metabolic risk early, and unintentional weight loss can be a sign that needs follow-up. Both obesity and low body weight are linked to microbiome imbalance."],
+  r(){return `<div class="row"><div><label class="f">${L("الطول (سم)","Height (cm)")}</label>${numIn("h")}</div><div><label class="f">${L("الوزن (كجم)","Weight (kg)")}</label>${numIn("w")}</div></div>
+   <label class="f">${L("محيط الوسط (سم) - اختياري","Waist (cm) - optional")}</label>${numIn("wa")}
+   <div class="q">${L("فقدان وزن غير مقصود خلال 3–6 شهور","Unintentional weight loss in the past 3–6 months")}</div>`+
+   opts("loss",[["0",["أقل من 5%","Less than 5%"]],["1",["من 5% إلى 10%","5% to 10%"]],["2",["أكثر من 10%","More than 10%"]]])+
+   `<div class="q">${L("هل أنت مريض جدًا حاليًا ولم تأكل تقريبًا منذ 5 أيام أو أكثر؟","Are you very sick right now AND have you barely eaten for 5 days or more?")}</div>
+<div class="why" style="margin:8px 0 10px"><b>${L("اختر «نعم» فقط لو الاثنين معًا:","Choose Yes only if BOTH are true:")}</b>
+① ${L("عندك مرض شديد ومفاجئ الآن (مثل عدوى شديدة، أو قيء وإسهال شديدين، أو بعد جراحة)","You have a sudden, serious illness now (for example a severe infection, severe vomiting or diarrhea, or after surgery)")}<br>
+② ${L("ولم تأكل تقريبًا منذ 5 أيام أو أكثر","and you have barely eaten for 5 days or more")}<br>
+<b style="margin-top:6px">${L("اختر «لا» في باقي الحالات:","Choose No in all other cases:")}</b>
+${L("صحتك عادية، أو عندك مرض مزمن (مثل السكر) لكنك تأكل بشكل طبيعي. أغلب الناس يختارون «لا».","you feel well, or you have a long-term condition (like diabetes) but you eat normally. Most people choose No.")}</div>`+opts("acute",[["0",["لا","No"]],["2",["نعم","Yes"]]],1)},
+  v(){const d=W.d;return +d.h>=100&&+d.h<=230&&+d.w>=25&&+d.w<=300&&d.loss!=null&&d.acute!=null}},
+ {ic:"🥗",t:["أكلك","Your eating"],
+  why:["الألياف والنباتات المتنوعة والأطعمة المخمّرة هي الغذاء الأساسي للميكروبيوم، أما الإفراط في المقليات والسكريات فيقلل التنوع. جودة الغذاء من أقوى العوامل التي نستطيع تغييرها.","Fiber, plant variety and fermented foods feed your microbiome, while a lot of fried food and sugar lowers diversity. Diet quality is one of the strongest factors we can change."],
+  r(){const a=W.d.diet||[];return `<p style="color:var(--mu);font-size:14px">${L("كم يوم في الأسبوع تأكل هذه الأطعمة؟ (ما عدا الماء: كوب في اليوم)","How many days a week do you eat these foods? (Water is the exception: cups per day)")}</p>`+DIET.map((it,i)=>`<div class="q">${pk(it[1])}</div><div class="opts2">${(it[0]==="water"?WATER:FREQ).map(([v,l])=>`<label class="opt ${a[i]===v?"sel":""}" onclick="setA('diet',${i},${v},9)">${pk(l)}</label>`).join("")}</div>`).join("")},
+  v(){return arrOk(W.d.diet,9)}},
+ {ic:"💩",t:["هضمك","Your digestion"],
+  why:["شكل البراز وانتظامه من أبسط المؤشرات على حركة الأمعاء وصحة الميكروبيوم. الإمساك والإسهال المزمنان وأعراض مثل الانتفاخ تتداخل كثيرًا مع التوتر والمزاج.","Stool form and regularity are simple markers of gut motility and microbiome health. Chronic constipation or diarrhea and symptoms such as bloating overlap strongly with stress and mood."],
+  r(){return `<div class="q">${L("اختر الشكل الأكثر تكرارًا (مقياس بريستول)","Pick your most common form (Bristol scale)")}</div>`+BR.map(([g,l],i)=>`<label class="opt bri ${W.d.bt==i+1?"sel":""}" onclick="pick('bt',${i+1})"><span class="gl">${g}</span><span><b>${i+1}</b> · ${pk(l)} <span class="tag">${i<2?L("إمساك","Constipation"):i<4?L("طبيعي","Normal"):i==4?L("ميل للّيونة","Tending soft"):L("إسهال","Diarrhea")}</span></span></label>`).join("")+
+   `<div class="q">${L("عدد مرات الإخراج","Bowel movement frequency")}</div>`+opts("freq",[["a",["أقل من 3 مرات أسبوعيًا","Fewer than 3 per week"]],["b",["3–6 مرات أسبوعيًا","3–6 per week"]],["c",["1–3 مرات يوميًا","1–3 per day"]],["d",["أكثر من 3 مرات يوميًا","More than 3 per day"]]],1)+
+   `<div class="q">${L("أعراض تعانيها حاليًا","Current symptoms")}</div>`+chips("sym",SYM.concat([["none",["لا شيء","None"]]]),1)+
+   `<div class="q">${L("علامات تحذيرية (اختر ما ينطبق)","Warning signs (select any that apply)")}</div>`+chips("rf",RF.concat([["none",["لا شيء","None"]]]),1)},
+  v(){const d=W.d;return d.bt&&d.freq&&(d.sym||[]).length>0&&(d.rf||[]).length>0}},
+ {ic:"🧠",t:["مزاجك (PHQ-9)","Your mood (PHQ-9)"],
+  why:["PHQ-9 أداة فحص عالمية لأعراض الاكتئاب. اكتشاف الأعراض مبكرًا يتيح التدخل قبل أن تتفاقم، والأمعاء والمزاج يؤثران في بعضهما، فمتابعة الاثنين معًا أدق.","PHQ-9 is a widely used screening tool for depressive symptoms. Spotting symptoms early allows action before they worsen, and gut and mood influence each other, so tracking both is more informative."],
+  r(){const a=W.d.phq||[];return `<p style="color:var(--mu);font-size:14px">${L("على مدار الأسبوعين الماضيين، كم مرة أزعجتك أي من المشاكل التالية؟","Over the last 2 weeks, how often have you been bothered by any of the following problems?")}</p>`+PHQ.map((x,i)=>`<div class="q">${i+1}. ${pk(x)}</div><div class="opts2">${PHQO.map(([v,l])=>`<label class="opt ${a[i]===v?"sel":""}" onclick="setA('phq',${i},${v},9)">${pk(l)}</label>`).join("")}</div>`).join("")+
+   (Number(a[8])>0?`<div class="danger">${crisis()}</div>`:"")+
+   (a.some(x=>x>0)?`<div class="q">10. ${L("إذا قمت بفحص أي مشاكل، فما مدى صعوبة هذه المشاكل في القيام بعملك أو الاهتمام بالأشياء في المنزل أو التعايش مع أشخاص آخرين؟","If you checked off any problems, how difficult have these problems made it for you to do your work, take care of things at home, or get along with other people?")}</div><div class="opts2">${PHQ10.map(([v,l])=>`<label class="opt ${W.d.phq10===v?"sel":""}" onclick="pick('phq10',${v})">${pk(l)}</label>`).join("")}</div>`:"")+
+   `<p style="font-size:12px;color:var(--mu);margin-top:14px">${L("استبيان صحة المريض PHQ-9. تم تطويره بواسطة الدكتورين روبرت إل سبيتزر وجانيت بي دبليو ويليامز وكورت كرونكي وزملائه، بمنحة تعليمية من شركة Pfizer Inc. لا يلزم الحصول على إذن لإعادة الإنتاج أو الترجمة أو العرض أو التوزيع.","Patient Health Questionnaire (PHQ-9). Developed by Drs. Robert L. Spitzer, Janet B.W. Williams, Kurt Kroenke and colleagues, with an educational grant from Pfizer Inc. No permission required to reproduce, translate, display or distribute.")}</p>`},
+  v(){return arrOk(W.d.phq,9)&&(!W.d.phq.some(x=>x>0)||W.d.phq10!=null)}},
+ {ic:"🌙",t:["نمط حياتك","Your lifestyle"],
+  why:["النوم والحركة والتوتر والتدخين تؤثر على الميكروبيوم والمزاج وحركة الأمعاء، وهي من أسهل العادات التي يمكن تعديلها.","Sleep, movement, stress and smoking affect the microbiome, mood and gut motility, and they are among the easiest habits to change."],
+  r(){return `<div class="q">${L("ساعات النوم الليلية المعتادة","Usual nightly sleep")}</div>`+opts("sleep",[["a",["أقل من 6","Under 6 h"]],["b",["6–7","6–7 h"]],["c",["7–9","7–9 h"]],["d",["أكثر من 9","Over 9 h"]]],1)+
+   `<div class="q">${L("أيام النشاط البدني (30 دقيقة فأكثر) أسبوعيًا","Days per week with 30+ min of physical activity")}</div>`+opts("act",[["0",["لا شيء","None"]],["1",["1–2","1–2"]],["2",["3–4","3–4"]],["3",["5 أو أكثر","5 or more"]]],1)+
+   `<div class="q">${L("التدخين","Smoking")}</div>`+opts("smoke",[["0",["لا أدخن","Non-smoker"]],["1",["أحيانًا","Occasionally"]],["2",["يوميًا","Daily"]]],1)+
+   `<div class="q">${L("مستوى التوتر في آخر شهر","Stress level in the last month")}</div>`+opts("stress",[["1",["1 منخفض","1 Low"]],["2",["2","2"]],["3",["3","3"]],["4",["4","4"]],["5",["5 مرتفع","5 High"]]],0).replace('class=""','class="opts2"')},
+  v(){const d=W.d;return d.sleep&&d.act!=null&&d.smoke!=null&&d.stress}},
+ {ic:"🩺",t:["حالتك الصحية","Your health conditions"],
+  why:["بعض الأمراض لها علاقة مباشرة بالميكروبيوم، وبعضها يغيّر نوع الأكل المناسب لك (مثل مرض الكلى والسكري). معرفة حالتك تجعل الخطة آمنة وأدق، وسنشرح لك العلاقة بين كل مرض وميكروبيوم الأمعاء.","Some conditions are directly tied to the microbiome, and some change which food is right for you (such as kidney disease or diabetes). Knowing your health history makes the plan safer and more accurate, and we will explain how each condition relates to your gut microbiome."],
+  r(){return `<div class="q">${L("هل تعاني من أي من الأمراض التالية؟","Do you have any of the following conditions?")}</div>`+chips("cond",COND.map(c=>[c.id,c.n]).concat([["none",["لا شيء مما سبق","None of these"]]]),1)},
+  v(){return (W.d.cond||[]).length>0}}
+];
+function crisis(){return L("لو عندك أفكار لإيذاء نفسك، إنت مش لوحدك. تواصل مع شخص تثق به أو اتصل دلوقتي بخط الدعم النفسي المجاني في مصر: 08008880700، أو الإسعاف 123. لو في خطر فوري توجّه لأقرب طوارئ.","If you have thoughts of hurting yourself, you are not alone. Talk to someone you trust or call Egypt's free mental health hotline now: 08008880700, or ambulance 123. If in immediate danger, go to the nearest emergency room.")}
+
+function ass(){
+ const s=STEPS[W.step],n=STEPS.length;
+ return `<div class="stepno">${L("الخطوة","Step")} ${W.step+1} / ${n}</div><div class="prog"><i style="width:${(W.step+1)/n*100}%"></i></div>
+ <div class="card"><h2>${s.ic} ${pk(s.t)}</h2>
+ <details class="why"><summary>ℹ️ ${L("ليه ده مهم؟ (اضغط)","Why does this matter? (tap)")}</summary><p style="color:inherit;margin:8px 0 0">${pk(s.why)}</p></details>
+ ${s.r()}
+ ${W.err&&!s.v()?`<div class="err">${L("من فضلك أكمل كل الإجابات المطلوبة.","Please complete all required answers.")}</div>`:""}</div>
+ <div class="stick"><button class="btn alt" onclick="back()">${ARB()} ${L("السابق","Back")}</button><button class="btn" onclick="next()">${W.step===n-1?L("عرض النتيجة","See my result")+" ✓":L("التالي","Next")+" "+ARN()}</button></div>`}
+function next(){const s=STEPS[W.step];if(!s.v()){W.err=true;keep();return}
+ W.err=false;if(W.step===STEPS.length-1){finish();return}W.step++;persist();render();scrollTo(0,0)}
+function back(){W.err=false;if(W.step===0){view="home"}else{W.step--;persist()}render();scrollTo(0,0)}
+function finish(){const r=compute(W.d);S.ass.push({d:today(),data:JSON.parse(JSON.stringify(W.d)),r});S.draft=null;save();view="res";render();scrollTo(0,0)}
+function startAss(resume){if(!(resume&&S.draft)){W={step:0,d:{},err:false}}else{W={step:S.draft.step,d:S.draft.d,err:false}}view="ass";render();scrollTo(0,0)}
+
+/* ============ results ============ */
+function ring(p){const c=2*Math.PI*44,o=c*(1-p/100),col=p>=80?"var(--ok)":p>=60?"var(--amb)":"var(--red)";
+ return `<svg width="110" height="110" viewBox="0 0 110 110"><circle cx="55" cy="55" r="44" fill="none" stroke="var(--bd)" stroke-width="10"/><circle cx="55" cy="55" r="44" fill="none" stroke="${col}" stroke-width="10" stroke-linecap="round" stroke-dasharray="${c}" stroke-dashoffset="${o}" transform="rotate(-90 55 55)"/><text x="55" y="62" text-anchor="middle" font-size="26" font-weight="700" fill="${col}">${Math.round(p)}</text></svg>`}
+function domRow(name,score,prev,note){
+ const dl=prev==null?"":(()=>{const x=Math.round(score-prev);return `<span class="delta ${x>0?"good":x<0?"low":""}">${x>0?"▲ +"+x:x<0?"▼ "+x:"="}</span>`})();
+ return `<div class="dom"><div class="top"><span>${name}</span><span class="${level(score)}">${Math.round(score)}% · ${levelTxt(score)}${dl}</span></div><div class="bar"><i class="bg-${level(score)}" style="width:${score}%"></i></div><small>${note}</small></div>`}
+function bmiCard(d,r){
+ if(r.preg)return `<div class="card"><h2>⚖️ ${L("الوزن","Weight")}</h2><p>${L("مؤشر كتلة الجسم لا ينطبق أثناء الحمل أو الرضاعة. تابع وزنك مع طبيبك.","BMI does not apply during pregnancy or breastfeeding. Follow your weight with your doctor.")}</p></div>`;
+ const h=+d.h/100,w=+d.w,b=r.bmi,lo=18.5*h*h,hi=24.9*h*h;
+ const cls=b<18.5?"fair":b<25?"good":b<30?"fair":"low";
+ const pos=Math.max(1,Math.min(99,(b-15)/25*100));
+ let adv;
+ if(b<18.5)adv=L(`للوصول إلى المدى الصحي تحتاج زيادة حوالي ${fx(lo-w)} كجم بتغذية مفيدة وليس بالسكريات.`,`To reach the healthy range you need to gain about ${fx(lo-w)} kg through nutritious food, not sugar.`);
+ else if(b<25)adv=L("وزنك ضمن المدى الصحي لطولك. حافظ عليه بالأكل المتنوع والحركة.","Your weight is within the healthy range for your height. Keep it with varied food and movement.");
+ else adv=L(`المدى الصحي لطولك أقل من ${fx(hi)} كجم. هدف واقعي أولًا: إنقاص 5% (${fx(w*.05)} كجم) إلى 10% (${fx(w*.1)} كجم) خلال 3–6 شهور، وهذا وحده يحسّن السكر والضغط والهضم.`,`The healthy range for your height is below ${fx(hi)} kg. A realistic first goal: lose 5% (${fx(w*.05)} kg) to 10% (${fx(w*.1)} kg) over 3–6 months, which alone improves blood sugar, blood pressure and digestion.`);
+ return `<div class="card"><h2>⚖️ ${L("حالتك حسب مؤشر كتلة الجسم","Your BMI category")}</h2>
+ <div class="big ${cls}" style="color:inherit">${bmiCat(b)}</div><p style="margin:0">BMI = <b>${fx(b)}</b> · ${L("وزنك","weight")} ${fx(w)} ${L("كجم","kg")} · ${L("طولك","height")} ${fx(+d.h)} ${L("سم","cm")}</p>
+ <div class="scw"><div class="scale"><i style="width:14%;background:var(--amb)"></i><i style="width:26%;background:var(--ok)"></i><i style="width:20%;background:var(--amb)"></i><i style="width:40%;background:var(--red)"></i></div><span class="mk" style="inset-inline-start:${pos}%">▼</span></div>
+ <div class="scl"><span style="width:14%">&lt;18.5</span><span style="width:26%">18.5–24.9</span><span style="width:20%">25–29.9</span><span style="width:40%">30+</span></div>
+ <p>${L("المدى الصحي لوزنك:","Healthy weight range:")} <b>${fx(lo)}–${fx(hi)} ${L("كجم","kg")}</b></p><p>${adv}</p>
+ ${r.waistHigh?`<p>⚠️ ${L("محيط وسطك مرتفع، وهذا يزيد الخطر الأيضي حتى مع وزن قريب من الطبيعي.","Your waist is high, which raises metabolic risk even when weight is near normal.")}</p>`:""}
+ <p><small>${L("BMI مقياس عام ولا يفرّق بين العضل والدهون.","BMI is a general measure and does not separate muscle from fat.")}</small></p></div>`}
+
+function resTabs(){return `<div class="seg">${[["sum",L("ملخص","Summary")],["plan",L("خطتي","My plan")],["meals",L("وجباتي","Meals")],["cond",L("حالتي","Conditions")]].map(([k,l])=>`<button class="${resTab===k?"on":""}" onclick="resTab='${k}';keep()">${l}</button>`).join("")}</div>`}
+function alerts(r){return ((r.i9||r.phq>=20)?`<div class="danger"><b>${L("نهتم بك","We care about you")}</b><br>${crisis()}</div>`:"")+
+ (r.red.length?`<div class="danger"><b>${L("علامات تحذيرية","Warning signs")}</b><br>${L("اخترت علامات تستدعي مراجعة الطبيب قريبًا:","You selected signs that call for seeing a doctor soon:")} ${r.red.map(x=>x==="loss"?L("فقدان وزن غير مقصود","unintentional weight loss"):pk((RF.find(y=>y[0]===x)||[0,["",""]])[1])).join("، ")}</div>`:"")}
+function actList(items,start){return items.map((a,i)=>`<div class="act"><b class="n">${i+1}</b><div>${i<3&&start?`<span class="pill">${L("ابدأ الآن","Start now")}</span>`:""}${pk(a.t)}</div></div>`).join("")}
+
+function res(){
+ if(!S.ass.length)return `<div class="card"><h2>${L("لا توجد نتيجة بعد","No result yet")}</h2><p>${L("ابدأ التقييم لتحصل على نتيجتك وخطة التحسين.","Start the assessment to get your result and improvement plan.")}</p><button class="btn" onclick="startAss()">${L("ابدأ التقييم","Start assessment")}</button></div>`;
+ const A=S.ass[S.ass.length-1],r=A.r,d=A.data,P=S.ass.length>1?S.ass[S.ass.length-2].r:null,plan=buildPlan(d,r);
+ let body="";
+ if(resTab==="sum"){
+  const notes={n:r.preg?L("تم احتساب الغذاء فقط أثناء الحمل/الرضاعة.","Only diet was counted during pregnancy/breastfeeding."):`BMI ${fx(r.bmi)} · MUST ${r.must}${r.waistHigh?" · "+L("محيط وسط مرتفع","high waist"):""}`,
+   g:`${L("بريستول","Bristol")} ${d.bt} · ${r.sc} ${L("أعراض","symptoms")}`,m:`PHQ-9: ${r.phq}/27 · ${phqLabel(r.phq)}`+(d.phq10!=null?` · ${L("صعوبة الأداء اليومي","daily-function difficulty")}: ${pk(PHQ10[d.phq10][1])}`:""),l:`${L("نوم","sleep")} · ${L("نشاط","activity")} · ${L("توتر","stress")}`};
+  body=`<div class="card hero"><div class="ring">${ring(r.overall)}<div><h2 style="margin:0">${L("مؤشر العافية","Wellness index")}</h2><p style="margin:4px 0">${levelTxt(r.overall)} · ${A.d}</p>${P?`<p>${L("عن التقييم السابق:","vs last check:")} ${Math.round(r.overall-P.overall)>0?"+":""}${Math.round(r.overall-P.overall)}</p>`:""}</div></div></div>
+  ${alerts(r)}${bmiCard(d,r)}${kcalCard(d,r)}
+  <div class="card"><h2>${L("نتيجتك في 4 محاور","Your 4 areas")}</h2>${domRow("🥗 "+L("التغذية","Nutrition"),r.nutrition,P&&P.nutrition,notes.n)}${domRow("💩 "+L("الهضم","Digestion"),r.gut,P&&P.gut,notes.g)}${domRow("🧠 "+L("المزاج","Mood"),r.mood,P&&P.mood,notes.m)}${domRow("🌙 "+L("نمط الحياة","Lifestyle"),r.life,P&&P.life,notes.l)}</div>
+  <div class="card"><h2>${L("ابدأ بهذه الخطوات هذا الأسبوع","Start with these steps this week")}</h2>${actList(plan.slice(0,3),0)}
+  <div class="btns"><button class="btn alt" onclick="resTab='plan';keep()">${L("الخطة كاملة","Full plan")}</button><button class="btn" onclick="resTab='meals';keep()">${L("وجباتي المقترحة","My meals")}</button></div></div>`;
+ }else if(resTab==="plan"){
+  body=`${alerts(r)}<div class="card"><h2>${L("خطة التحسين المخصصة لك","Your personalized improvement plan")}</h2><p>${L("مرتبة حسب الأولوية. ابدأ بأول 3 خطوات.","Ordered by priority. Start with the first 3 steps.")}</p>${plan.length?actList(plan,1):`<p>${L("عاداتك ممتازة. استمر وأعد التقييم دوريًا.","Your habits look great. Keep going and re-check regularly.")}</p>`}</div>
+  <div class="card"><h2>${L("أهداف الـ 3 شهور","Your 3-month goals")}</h2>
+  <div class="act"><b class="n">1</b><div>${L("حوالي 25 جم ألياف يوميًا و30 نوع نبات أسبوعيًا (تابعها في المفكرة).","About 25 g fiber a day and 30 plant types a week (track them in the diary).")}</div></div>
+  <div class="act"><b class="n">2</b><div>${L("بريستول 3–4 بشكل معتاد وأعراض هضمية أقل.","Usual Bristol 3–4 and fewer digestive symptoms.")}</div></div>
+  <div class="act"><b class="n">3</b><div>${L("نوم 7–9 ساعات ونشاط 150 دقيقة أسبوعيًا.","7–9 hours of sleep and 150 minutes of activity weekly.")}</div></div>
+  <div class="act"><b class="n">4</b><div>${L("إعادة التقييم بعد 3 شهور لمقارنة تقدمك.","Re-assess after 3 months to compare your progress.")}</div></div>
+  <button class="btn" onclick="go('plan3')">🗓️ ${L("افتح خطة الـ 3 شهور اليومية","Open the 3-month daily plan")}</button><button class="btn alt" onclick="startAss()">${L("إعادة التقييم","Re-assess")}</button></div>`;
+ }else if(resTab==="meals"){body=mealsUI(d,r)}
+ else{const cond=(d.cond||[]).filter(c=>CM[c]);
+  body=cond.length?`<p style="margin:4px 2px;color:var(--mu);font-size:14px">${L("حالتك الصحية وعلاقتها بالميكروبيوم","Your conditions and the microbiome")}</p>${cond.map(condCard).join("")}`:`<div class="card"><p>${L("لم تختر أي حالة صحية. يمكنك تصفح كل الأمراض وعلاقتها بالميكروبيوم من تبويب تعلّم.","You selected no conditions. Browse all conditions and their microbiome links in the Learn tab.")}</p><button class="btn alt" onclick="go('learn')">${L("افتح تعلّم","Open Learn")}</button></div>`}
+ return resTabs()+body+`<div class="warn">${L("هذا فحص مبدئي وتثقيف وليس تشخيصًا ولا بديلًا عن الطبيب أو الأخصائي.","This is preliminary screening and education, not a diagnosis, and does not replace a doctor or specialist.")}</div>`}
+
+/* ---- Egyptian meal planner (idea 3) ---- */
+const MEALS=[
+ ["b","b1",["فول مدمس بالليمون مع عيش بلدي وسلطة","Ful medames with lemon, baladi bread and salad"],[["ful",1],["baladi",.5],["tom",1],["cuc",1],["pars",1]],["gluten","legume"]],
+ ["b","b2",["شوفان بالزبادي والموز واللوز","Oats with yogurt, banana and almonds"],[["oat",1],["yog",1],["banana",1],["alm",.5]],["gluten","dense"]],
+ ["b","b3",["بيض مسلوق مع عيش بلدي وجرجير وطماطم","Boiled eggs with baladi bread, rocket and tomato"],[["eggs",2],["baladi",.5],["roc",1],["tom",1]],["gluten","light"]],
+ ["b","b4",["زبادي مع تمر ولوز وجوافة","Yogurt with dates, almonds and guava"],[["yog",1],["date",1],["alm",.5],["guava",1]],["sugar","dense"]],
+ ["b","b5",["عجة سبانخ مع طماطم وزبادي","Spinach omelette with tomato and yogurt"],[["eggs",2],["spin",1],["tom",1],["yog",1]],["light","gentle"]],
+ ["l","l1",["شوربة عدس مع سلطة وعيش بلدي وفراخ مشوية","Lentil soup with salad, baladi bread and grilled chicken"],[["lent",1],["cuc",1],["tom",1],["roc",1],["baladi",.5],["chk",1]],["gluten","legume"]],
+ ["l","l2",["ملوخية مع أرز بني وفراخ","Molokhia with brown rice and chicken"],[["molo",1],["brice",1],["chk",1]],["light","gentle"]],
+ ["l","l3",["سمك مشوي مع كوسة وجزر وبطاطا","Grilled fish with zucchini, carrot and sweet potato"],[["fish",1],["zuc",1],["car",1],["swp",1]],["light","gentle"]],
+ ["l","l4",["بامية بالصلصة مع أرز بني وسلطة","Okra stew with brown rice and salad"],[["okra",1],["brice",1],["cuc",1],["tom",1]],["light"]],
+ ["l","l5",["حمص وفريك مع سلطة خضراء","Chickpeas and freekeh with green salad"],[["chick",1],["freek",1],["roc",1],["cuc",1]],["gluten","legume"]],
+ ["l","l6",["نصف طبق كشري مع سلطة","Half a plate of koshari with salad"],[["kosh",.7],["cuc",1],["tom",1]],["gluten","legume","dense"]],
+ ["l","l7",["لحمة مشوية مع سبانخ وأرز أبيض","Grilled meat with spinach and white rice"],[["meat",1],["spin",1],["rice",1]],["dense","gentle"]],
+ ["d","d1",["لبن رايب مع سلطة وعيش بلدي وبيضة","Rayeb with salad, baladi bread and an egg"],[["rayeb",1],["cuc",1],["tom",1],["roc",1],["baladi",.5],["eggs",1]],["gluten","light"]],
+ ["d","d2",["زبادي مع سلطة خيار وطماطم وعيش بلدي","Yogurt with cucumber-tomato salad and baladi bread"],[["yog",1],["cuc",1],["tom",1],["baladi",.5]],["gluten","light"]],
+ ["d","d3",["سمك مع جزر وكوسة مطبوخين","Fish with cooked carrot and zucchini"],[["fish",1],["car",1],["zuc",1]],["light","gentle"]],
+ ["d","d4",["نصف طبق فول مع سلطة وعيش بلدي","Half a plate of ful with salad and baladi bread"],[["ful",.7],["tom",1],["cuc",1],["baladi",.5]],["gluten","legume"]],
+ ["d","d6",["فراخ مشوية مع سبانخ وبطاطا","Grilled chicken with spinach and sweet potato"],[["chk",1],["spin",1],["swp",1]],["gentle","light"]],
+ ["s","s1",["تفاحة","An apple"],[["apple",1]],["light"]],
+ ["s","s2",["زبادي","Yogurt"],[["yog",1]],["light","gentle"]],
+ ["s","s3",["حفنة لوز وتمرتان","A handful of almonds and two dates"],[["alm",1],["date",1]],["sugar","dense"]],
+ ["s","s4",["جوافة","A guava"],[["guava",1]],["light"]],
+ ["s","s5",["موزة مع زبادي","A banana with yogurt"],[["banana",1],["yog",1]],["dense","gentle"]],
+ ["s","s6",["جزر وخيار بالطحينة","Carrot and cucumber with tahini"],[["car",1],["cuc",1],["tahini",.5]],["light"]]
+].map(a=>({s:a[0],id:a[1],n:a[2],items:a[3],f:a[4]}));
+function mScaled(m,s){return m.items.map(([id,n])=>[id,id==="eggs"?Math.max(.5,Math.round(n*s*2)/2):Math.round(n*s*20)/20])}
+function mFib(m,s=1){return mScaled(m,s).reduce((a,[id,n])=>a+FM[id].fib*FM[id].srv*n/100,0)}
+function mKcal(m,s=1){return mScaled(m,s).reduce((a,[id,n])=>a+FM[id].kcal*FM[id].srv*n/100,0)}
+function scaleFor(raw,t){let s=Math.max(.75,Math.min(1.3,t/raw));s=Math.round(s*20)/20;return Math.abs(s-1)<.08?1:s}
+function energy(d,r){
+ const c=d.cond||[];
+ if(r.preg)return {na:"preg"};
+ if(c.includes("ckd"))return {na:"ckd"};
+ const w=+d.w,h=+d.h,a=+d.age,male=d.sex==="m";
+ const bmr=Math.round(10*w+6.25*h-5*a+(male?5:-161));
+ const af=[1.2,1.375,1.55,1.725][+d.act]||1.2;
+ const tdee=Math.round(bmr*af);
+ let goal=r.bmi>=25?"lose":r.bmi<18.5?"gain":"maintain",hold=false;
+ if(r.red.length||r.must>=2){if(goal!=="maintain")hold=true;goal="maintain"}
+ let delta=goal==="lose"?-Math.min(500,Math.round(tdee*.2)):goal==="gain"?Math.min(500,Math.round(tdee*.2)):0;
+ const floor=male?1500:1200;let floored=false,target=tdee+delta;
+ if(goal==="lose"&&target<floor){if(floor>=tdee){goal="maintain";delta=0;target=tdee}else{target=floor;delta=floor-tdee;floored=true}}
+ target=Math.round(target/10)*10;
+ const bw=r.bmi>=25?25*(h/100)**2:w;
+ return {bmr,af,tdee,delta,target,goal,hold,floored,male,
+  wk:Math.abs(delta)*7/7700,
+  protein:[Math.round(bw*1.0),Math.round(bw*1.2)],
+  carbs:[Math.round(target*.45/4),Math.round(target*.6/4)],
+  fat:[Math.round(target*.2/9),Math.round(target*.35/9)],
+  fiber:Math.max(25,Math.round(14*target/1000)),
+  water:[(w*30/1000).toFixed(1),(w*35/1000).toFixed(1)]}}
+function kcalCard(d,r){
+ const E=energy(d,r);
+ if(E.na)return `<div class="card"><h2>🔥 ${L("السعرات","Calories")}</h2><p>${E.na==="preg"?L("حساب السعرات غير متاح أثناء الحمل والرضاعة لأن الاحتياج يختلف. اطلبي خطة من طبيبك أو أخصائي التغذية.","Calorie targets are not provided during pregnancy or breastfeeding because needs differ. Ask your doctor or dietitian for a plan."):L("مع مرض الكلى تُحسب السعرات والبروتين بشكل فردي مع طبيبك أو أخصائي الكلى.","With kidney disease, calories and protein are set individually with your doctor or renal dietitian.")}</p></div>`;
+ const g=E.hold?L("لوجود علامات تحذيرية أو خطر سوء تغذية، عرضنا سعرات الحفاظ على الوزن فقط. راجع طبيبك أو أخصائي تغذية قبل أي تغيير في وزنك.","Because of warning signs or malnutrition risk, we show maintenance calories only. See your doctor or a dietitian before any change in weight."):
+  E.goal==="lose"?L(`هدفك: إنقاص الوزن تدريجيًا بحوالي ${fx(E.wk)} كجم أسبوعيًا (عجز ${Math.abs(E.delta)} سعرة يوميًا).`,`Your goal: gradual weight loss of about ${fx(E.wk)} kg a week (a ${Math.abs(E.delta)} kcal daily deficit).`):
+  E.goal==="gain"?L(`هدفك: زيادة وزن صحية بحوالي ${fx(E.wk)} كجم أسبوعيًا (${E.delta} سعرة إضافية يوميًا).`,`Your goal: healthy weight gain of about ${fx(E.wk)} kg a week (${E.delta} extra kcal daily).`):
+  L("هدفك: الحفاظ على وزنك الحالي.","Your goal: keep your current weight.");
+ const af=[L("قليل الحركة","Little activity"),L("نشاط خفيف","Light activity"),L("نشاط متوسط","Moderate activity"),L("نشاط عالٍ","High activity")][[1.2,1.375,1.55,1.725].indexOf(E.af)];
+ const sp=[["b",L("الفطار","Breakfast"),.25],["l",L("الغدا","Lunch"),.35],["s",L("سناك","Snack"),.1],["d",L("العشا","Dinner"),.3]];
+ return `<div class="card"><h2>🔥 ${L("احتياجك من السعرات","Your calorie needs")}</h2>
+ <div class="big">${E.target} <small>${L("سعرة في اليوم","kcal / day")}</small></div><p>${g}</p>
+ <table><tr><td>${L("الحرق الأساسي (BMR)","Basal metabolic rate (BMR)")}</td><td><b>${E.bmr}</b> ${L("سعرة","kcal")}</td></tr>
+ <tr><td>${L("إجمالي الحرق اليومي","Total daily burn")} (${af} ×${E.af})</td><td><b>${E.tdee}</b> ${L("سعرة","kcal")}</td></tr>
+ <tr><td>${L("البروتين","Protein")}</td><td><b>${E.protein[0]}–${E.protein[1]}</b> ${L("جم","g")}</td></tr>
+ <tr><td>${L("الكربوهيدرات","Carbohydrates")}</td><td><b>${E.carbs[0]}–${E.carbs[1]}</b> ${L("جم","g")}</td></tr>
+ <tr><td>${L("الدهون","Fat")}</td><td><b>${E.fat[0]}–${E.fat[1]}</b> ${L("جم","g")}</td></tr>
+ <tr><td>${L("الألياف","Fiber")}</td><td><b>${E.fiber}</b>+ ${L("جم","g")}</td></tr>
+ <tr><td>${L("الماء","Water")}</td><td><b>${E.water[0]}–${E.water[1]}</b> ${L("لتر","L")}</td></tr></table>
+ <h3>${L("توزيع السعرات على اليوم","Spread across the day")}</h3><p>${sp.map(([k,l,f])=>`${l}: <b>${Math.round(E.target*f/10)*10}</b>`).join(" · ")}</p>
+ ${E.floored?`<p><small>⚠️ ${L("تم تحديد حد أدنى آمن ("+(E.male?1500:1200)+" سعرة) فلا تقلّل عنه دون إشراف مختص.","A safe minimum ("+(E.male?1500:1200)+" kcal) was applied; do not go lower without professional supervision.")}</small></p>`:""}
+ <p><small>${L("الحساب بمعادلة Mifflin-St Jeor وتقديري (±10% تقريبًا) ويتغير مع وزنك ونشاطك، فأعد الحساب كل شهر. الأرقام ليست وصفة علاجية. لو كان عندك تاريخ مع اضطرابات الأكل فلا تعتمد على عدّ السعرات، واستشر مختصًا.","Calculated with the Mifflin-St Jeor equation and approximate (about ±10%); it changes with your weight and activity, so recalculate monthly. The numbers are not a medical prescription. If you have a history of eating disorders, do not rely on counting calories and consult a specialist.")}</small></p></div>`}
+
+function mealCtx(d,r){const c=d.cond||[];return {ckd:c.includes("ckd"),celiac:c.includes("celiac"),gi:c.includes("ibs")||c.includes("ibd"),sugar:["t2d","pcos","nafld"].some(x=>c.includes(x)),goal:r.preg?"":r.bmi>=25?"light":r.bmi<18.5?"dense":"",constip:+d.bt<=2||d.freq==="a"}}
+function pool(slot,x){
+ const sc=m=>(x.goal&&m.f.includes(x.goal)?2:0)+(x.gi&&m.f.includes("gentle")?1.5:0)+(x.constip&&!x.gi?mFib(m)/6:mFib(m)/12);
+ return MEALS.filter(m=>m.s===slot&&!(x.celiac&&m.f.includes("gluten"))&&!(x.gi&&m.f.includes("legume"))&&!(x.sugar&&m.f.includes("sugar"))).sort((a,b)=>sc(b)-sc(a))}
+function planSel(d,r){const x=mealCtx(d,r);return ["b","l","s","d"].map(s=>{const p=pool(s,x);return p[(mealSel[s]||0)%p.length]})}
+function swapMeal(s){mealSel[s]=(mealSel[s]||0)+1;keep()}
+function foodLine(id,n){const f=FM[id];return id==="eggs"?`${pk([f.ar,f.en])} × ${n}`:`${pk([f.ar,f.en])} ~${Math.round(f.srv*n)} ${L("جم","g")}`}
+function mealsUI(d,r){
+ const x=mealCtx(d,r);
+ if(x.ckd)return `<div class="card"><h2>🍽️ ${L("وجباتي المقترحة","My suggested meals")}</h2><div class="warn">${L("بسبب مرض الكلى لن نقترح وجبات عامة. البوتاسيوم والفوسفور قد يحتاجان ضبطًا، فاطلب خطة من طبيبك أو أخصائي كلى.","Because of kidney disease we will not suggest general meals. Potassium and phosphorus may need tailoring, so ask your doctor or renal dietitian for a plan.")}</div></div>`;
+ const sel2=planSel(d,r),slots=[["b",L("الفطار","Breakfast"),"🌅"],["l",L("الغدا","Lunch"),"☀️"],["s",L("سناك","Snack"),"🍎"],["d",L("العشا","Dinner"),"🌙"]];
+ const E=energy(d,r);let raw=0;sel2.forEach(m=>raw+=mKcal(m,1));const sc=E.target?scaleFor(raw,E.target):1;let kc=0;
+ let tot=0;const pl=new Set();
+ sel2.forEach(m=>{tot+=mFib(m,sc);kc+=mKcal(m,sc);m.items.forEach(([id])=>{if(PLANT.has(FM[id].type))pl.add(id)})});
+ const tgt=x.gi?20:25,goals=[];
+ if(x.goal==="light")goals.push(L("مناسبة لإنقاص الوزن تدريجيًا","suited to gradual weight loss"));
+ if(x.goal==="dense")goals.push(L("غنية بالطاقة لزيادة الوزن","energy-rich for weight gain"));
+ if(x.constip)goals.push(L("ألياف أعلى لتحسين الإمساك (مع الماء)","more fiber to ease constipation (with water)"));
+ if(x.gi)goals.push(L("لطيفة على الهضم","gentle on digestion"));
+ if(x.celiac)goals.push(L("خالية من الجلوتين","gluten-free"));
+ if(x.sugar)goals.push(L("قليلة السكريات","low in sugars"));
+ return `<div class="card"><h2>🍽️ ${L("وجبات مصرية مقترحة ليومك","Egyptian meals for your day")}</h2>
+ <p>${goals.length?L("مبنية على حالتك: ","Built for your profile: ")+goals.join(L(" · "," · ")):L("وجبات متوازنة غنية بالنباتات والألياف.","Balanced, plant-rich, fiber-rich meals.")}</p>
+ ${E.target?`<div class="dom"><div class="top"><span>${L("سعرات اليوم","Calories today")}</span><span>${Math.round(kc)} / ${E.target} ${L("سعرة","kcal")}</span></div><div class="bar"><i class="bg-good" style="width:${Math.min(100,kc/E.target*100)}%"></i></div><small>${sc===1?L("الحصص بالحجم القياسي.","Standard portion sizes."):L("حجم الحصص مضبوط ×","Portion size adjusted ×")+sc+" "+L("ليناسب هدفك","to fit your target")}</small></div>`:`<p><small>${L("سعرات اليوم تقريبًا:","Approx. calories today:")} ${Math.round(kc)}</small></p>`}
+ <div class="dom"><div class="top"><span>${L("ألياف اليوم","Fiber today")}</span><span>${fx(tot)} / ${tgt} ${L("جم","g")}</span></div><div class="bar"><i class="bg-${tot>=tgt*.9?"good":"fair"}" style="width:${Math.min(100,tot/tgt*100)}%"></i></div><small>${L("أنواع النباتات اليوم:","Plant types today:")} ${pl.size} · 💧 ${L("مع 8 أكواب ماء","with about 8 cups of water")}</small></div></div>
+ ${slots.map(([s,lbl,ic],i)=>{const m=sel2[i];return `<div class="card"><div class="top" style="display:flex;justify-content:space-between;align-items:center"><b>${ic} ${lbl}</b><button class="btn alt sm" onclick="swapMeal('${s}')">🔄 ${L("بدّل","Swap")}</button></div>
+ <h3 style="margin:6px 0 2px">${pk(m.n)}</h3><small>${mScaled(m,sc).map(([id,n])=>foodLine(id,n)).join(" · ")}</small><p style="margin:4px 0 0"><b>${Math.round(mKcal(m,sc))}</b> ${L("سعرة","kcal")} · ${fx(mFib(m,sc))} ${L("جم ألياف","g fiber")}${m.f.includes("legume")?` <span class="tag">${L("بقوليات","legumes")}</span>`:""}${FM[m.items[0][0]]&&m.items.some(([id])=>FM[id].fl.includes("f"))?` <span class="tag">${L("مخمّر","fermented")}</span>`:""}</p></div>`}).join("")}
+ <button class="btn" onclick="logPlan()">${L("➕ سجّل وجبات اليوم في المفكرة","➕ Log today's meals in my diary")}</button>${tmp.logged?`<p style="text-align:center;color:var(--ok)">${L("تم التسجيل ✓ شاهد الأنماط في المفكرة","Logged ✓ see patterns in the Diary")}</p>`:""}
+ <div class="warn">${L("الكميات والسعرات أمثلة تقريبية ولا تشمل زيت الطبخ والتتبيلة (ملعقة صغيرة زيت زيتون حوالي 40 سعرة). عدّلها مع أخصائي تغذية، وزِد الألياف تدريجيًا.","Portions and calories are rough examples and exclude cooking oil and dressings (a teaspoon of olive oil is about 40 kcal). Tailor them with a dietitian, and increase fiber gradually.")}</div>`}
+function logPlan(){const A=S.ass[S.ass.length-1];if(!A)return;const m=planSel(A.data,A.r);const E=energy(A.data,A.r);let raw=0;m.forEach(z=>raw+=mKcal(z,1));const sc=E.target?scaleFor(raw,E.target):1;const ids=new Set();let f=0,k=0;m.forEach(z=>{f+=mFib(z,sc);k+=mKcal(z,sc);z.items.forEach(([id])=>ids.add(id))});
+ S.diary.push({d:today(),mood:null,sym:[],bt:null,foods:[...ids],fiber:f,kcal:k,notes:L("من خطة الوجبات","From the meal plan")});save();tmp.logged=1;keep()}
+function condCard(id){const c=CM[id];return `<div class="card cond"><h3 style="margin-top:0">${pk(c.n)}</h3>
+ <p><b>${L("العلاقة بالميكروبيوم:","Microbiome link:")}</b> ${pk(c.rel)}</p><p><b>${L("ما يساعد عادة:","What often helps:")}</b> ${pk(c.help)}</p>${c.caut?`<div class="warn" style="margin-bottom:0">⚠️ ${pk(c.caut)}</div>`:""}</div>`}
+
+/* ============ home / learn ============ */
+function home(){
+ const last=S.ass[S.ass.length-1];
+ const bm=last&&!last.r.preg?`<div class="card" onclick="goRes('sum')"><h2>⚖️ ${L("حالتك حسب BMI","Your BMI category")}</h2><div class="big" style="font-size:24px">${bmiCat(last.r.bmi)} · ${fx(last.r.bmi)}</div><p>${L("اضغط لعرض النتيجة كاملة","Tap to see the full result")}</p></div>`:"";
+ let pc="";
+ if(last&&S.plan){const i=dayIdx(today()),w=Math.min(12,Math.max(1,Math.floor(i/7)+1)),left=Math.round((new Date(planDue()+"T12:00:00")-new Date(today()+"T12:00:00"))/864e5),z=dayDone(today());
+  pc=left<=0?`<div class="card hero"><h2>📅 ${L("حان موعد إعادة التقييم!","Time to re-assess!")}</h2><p>${L("مرّت 3 شهور. أعد التقييم لنقارن تقدمك.","3 months have passed. Re-assess to compare your progress.")}</p><button class="btn wht" onclick="startAss()">${L("ابدأ إعادة التقييم","Start re-assessment")}</button></div>`
+  :`<div class="card" onclick="go('plan3')"><h2>🗓️ ${L("خطتي: الأسبوع","My plan: week")} ${w} / 12</h2><div class="bar"><i class="bg-good" style="width:${z[1]?z[0]/z[1]*100:0}%"></i></div><p>${L("مهام اليوم","Today's tasks")}: ${z[0]}/${z[1]} · ${L("إعادة التقييم بعد","re-assess in")} ${left} ${L("يومًا","days")}</p></div>`}
+ else if(last)pc=`<div class="card" onclick="go('plan3')"><h2>🗓️ ${L("ابدأ خطة الـ 3 شهور","Start your 3-month plan")}</h2><p>${L("جدول يومي مفصل للتغذية والمزاج والنشاط.","A detailed daily schedule for nutrition, mood and activity.")}</p></div>`;
+ return `<div class="card hero"><h2>${L("أهلًا بك في معدة رايقة 👋","Welcome to Balanced Gut 👋")}</h2><p>${L("أمعاء سليمة، مزاج رايق. اعرف حالتك واحصل على خطة ووجبات تناسبك.","Happy gut, happy mood. Know where you stand and get a plan and meals that fit you.")}</p>
+ <button class="btn wht" onclick="startAss(${S.draft?1:0})">${S.draft?L("متابعة التقييم","Continue assessment"):last?L("إعادة التقييم","Re-assess"):L("ابدأ التقييم (7 دقائق)","Start assessment (7 min)")}</button></div>
+ ${pc}${bm}
+ ${last?`<div class="grid2"><div class="card tile" onclick="goRes('plan')"><span>🎯</span>${L("خطة التحسين","My plan")}</div><div class="card tile" onclick="goRes('meals')"><span>🍽️</span>${L("وجباتي","My meals")}</div></div>`:""}
+ <div class="grid2"><div class="card tile" onclick="go('diary')"><span>📓</span>${L("تسجيل سريع","Quick log")}</div><div class="card tile" onclick="go('recipes')"><span>🥛</span>${L("وصفات بروبيوتيك","Probiotic recipes")}</div></div>
+ <div class="warn">${L("للتثقيف والفحص المبدئي فقط وليس تشخيصًا. بياناتك على جهازك فقط.","For education and preliminary screening only, not a diagnosis. Your data stays on your device.")}</div>`}
+function goRes(t){resTab=t;go("res")}
+function learn(){
+ return `<div class="card"><h2>${L("لماذا الميكروبيوم مهم؟","Why the microbiome matters")}</h2>${INTRO.map(x=>`<h3>${x.ic} ${pk(x.t)}</h3><p>${pk(x.b).replace(/\n/g,"<br>")}</p>`).join("")}</div>
+ <h2 style="margin:16px 4px 8px">${L("الأمراض وعلاقتها بالميكروبيوم","Conditions and the microbiome")}</h2>${COND.map(c=>condCard(c.id)).join("")}
+ <div class="warn">${L("هذه معلومات عامة من دراسات رصدية وتجارب، والعلاقة لا تعني دائمًا السببية. استشر طبيبك لحالتك.","This is general information from observational studies and trials; an association does not always mean causation. Consult your doctor about your case.")}</div>`}
+
+/* ============ diary & foods ============ */
+const MOODS=["😞","😕","😐","🙂","😄"];
+function foodChips(list){return list.map(f=>`<span class="chip ${sel.has(f.id)?"sel":""}" onclick="togFood('${f.id}')">${pk([f.ar,f.en])}</span>`).join("")}
+function flt(){return F.filter(f=>!q||(f.ar+f.en).toLowerCase().includes(q.toLowerCase()))}
+function insights(){
+ const E=S.diary.filter(e=>e.mood);
+ if(E.length<3)return [L("سجّل 3 أيام على الأقل (بالمزاج) لتظهر الأنماط.","Log at least 3 days (with mood) to see patterns.")];
+ const avg=a=>a.reduce((x,y)=>x+y,0)/a.length,out=[];
+ const mf=avg(E.map(e=>e.fiber)),hi=E.filter(e=>e.fiber>=mf),lo=E.filter(e=>e.fiber<mf);
+ if(hi.length&&lo.length){const dm=avg(hi.map(e=>e.mood))-avg(lo.map(e=>e.mood));
+  if(dm>=0.4)out.push(L("الأيام الأعلى في الألياف كان مزاجها أفضل في سجلك.","Your higher-fiber days had better mood in your log."));
+  else if(dm<=-0.4)out.push(L("لم يظهر تحسن في المزاج مع الألياف الأعلى حتى الآن، ربما تحتاج وقتًا أطول.","No mood gain with higher fiber so far; it may need more time."));}
+ const fe=E.filter(e=>e.foods.some(id=>FM[id].fl.includes("f"))),nf=E.filter(e=>!e.foods.some(id=>FM[id].fl.includes("f")));
+ if(fe.length&&nf.length&&avg(fe.map(e=>e.mood))-avg(nf.map(e=>e.mood))>=0.4)out.push(L("الأيام التي أكلت فيها أطعمة مخمّرة (زبادي، رايب، مخلل) كان مزاجها أفضل.","Days with fermented foods (yogurt, rayeb, pickles) had better mood."));
+ const sy=E.filter(e=>e.sym.length),ns=E.filter(e=>!e.sym.length);
+ if(sy.length&&ns.length){const df=avg(sy.map(e=>e.fiber))-avg(ns.map(e=>e.fiber));
+  if(df<=-4)out.push(L("أيام الأعراض الهضمية كانت أقل في الألياف: جرّب زيادة الألياف تدريجيًا مع الماء.","Digestive-symptom days were lower in fiber: try raising fiber gradually with water."));
+  if(df>=4)out.push(L("أيام الأعراض كانت أعلى في الألياف: ربما تحتاج الزيادة أبطأ، أو ينقصك الماء.","Symptom days were higher in fiber: you may need to increase more slowly, or drink more water."));
+  const lg=E.filter(e=>e.foods.some(id=>FM[id].type==="legume"));
+  if(lg.length>=2&&lg.filter(e=>e.sym.length).length/lg.length>=.6)out.push(L("الأعراض ظهرت في معظم الأيام التي أكلت فيها بقوليات: جرّب كميات أصغر وتبليلًا جيدًا وطهيًا كافيًا.","Symptoms appeared on most legume days: try smaller portions, soaking and thorough cooking."));}
+ if(!out.length)out.push(L("لا أنماط واضحة حتى الآن. استمر في التسجيل.","No clear patterns yet. Keep logging."));
+ return out}
+function usePlanMeals(){const A=S.ass[S.ass.length-1];if(!A)return;const ids=new Set();planSel(A.data,A.r).forEach(m=>m.items.forEach(([id])=>ids.add(id)));
+ tmp.notes=document.getElementById("d_notes").value;sel=ids;keep()}
+function diary(){
+ let fib=0,kcal=0;sel.forEach(id=>{fib+=FM[id].fib*FM[id].srv/100;kcal+=FM[id].kcal*FM[id].srv/100});
+ const wk=Date.now()-7*864e5,rec=S.diary.filter(e=>new Date(e.d).getTime()>=wk),pl=new Set();rec.forEach(e=>e.foods.forEach(id=>{if(PLANT.has(FM[id].type))pl.add(id)}));
+ const ins=insights();
+ return `<div class="card"><h2>📓 ${L("تسجيل سريع","Quick log")}</h2>
+ <div class="q" style="margin-top:4px">${L("كيف مزاجك اليوم؟","How is your mood today?")}</div><div class="moods">${[1,2,3,4,5].map(n=>`<span class="mood ${tmp.mood===n?"sel":""}" onclick="tmp.mood=${n};tmp.notes=document.getElementById('d_notes').value;keep()">${MOODS[n-1]}</span>`).join("")}</div>
+ <div class="q">${L("أعراض الهضم","Digestive symptoms")}</div><div>${SYM.map(([k,l])=>`<span class="chip ${(tmp.sym||[]).includes(k)?"sel":""}" onclick="togSym('${k}')">${pk(l)}</span>`).join("")}</div>
+ <div class="q">${L("اللي أكلته","What I ate")} <small>(${L("ألياف","fiber")}: ${fx(fib)} ${L("جم","g")} · ${Math.round(kcal)} ${L("سعرة","kcal")})</small></div>
+ ${S.ass.length?`<button class="btn alt sm" onclick="usePlanMeals()">🍽️ ${L("استخدم وجبات خطتي","Use my plan's meals")}</button>`:""}
+ <input type="text" style="margin-top:8px" placeholder="${L("ابحث عن أكلة","Search a food")}" value="${esc(q)}" oninput="q=this.value;document.getElementById('fl').innerHTML=foodChips(flt())">
+ <div id="fl" style="margin-top:6px;max-height:200px;overflow:auto">${foodChips(flt())}</div>
+ <details class="why" style="background:#f0f3f0;color:var(--tx)"><summary>${L("خيارات إضافية (التاريخ، بريستول، ملاحظات)","More options (date, Bristol, notes)")}</summary>
+ <label class="f">${L("التاريخ","Date")}</label><input type="date" value="${tmp.date||today()}" onchange="tmp.date=this.value">
+ <label class="f">${L("نوع بريستول","Bristol type")}</label><select onchange="tmp.bt=this.value"><option value="">—</option>${BR.map((b,i)=>`<option value="${i+1}" ${tmp.bt==i+1?"selected":""}>${i+1} — ${pk(b[1])}</option>`).join("")}</select></details>
+ <textarea id="d_notes" rows="2" placeholder="${L("ملاحظات (اختياري)","Notes (optional)")}">${esc(tmp.notes||"")}</textarea>
+ <button class="btn" onclick="saveDiary()">${L("حفظ","Save")}</button>${tmp.ok?`<p style="text-align:center;color:var(--ok)">${L("تم الحفظ ✓","Saved ✓")}</p>`:""}</div>
+ <div class="card"><h2>🔎 ${L("أنماطك","Your patterns")}</h2>${ins.map(t=>`<p>• ${t}</p>`).join("")}<p><small>${L("ارتباطات فقط وليست أسبابًا مؤكدة.","Associations only, not proven causes.")}</small></p></div>
+ <div class="card"><h2>🌱 ${L("تنوع النباتات هذا الأسبوع","Plant diversity this week")}</h2><div class="big">${pl.size} / 30</div><div class="bar"><i class="bg-good" style="width:${Math.min(100,pl.size/30*100)}%"></i></div></div>
+ <div class="card"><h2>${L("آخر السجلات","Recent entries")}</h2>${S.diary.length?`<table>${S.diary.slice(-10).reverse().map(e=>`<tr><td>${e.d}</td><td>${e.mood?MOODS[e.mood-1]:"—"}</td><td>${fx(e.fiber)} ${L("جم","g")}</td><td>${e.kcal?Math.round(e.kcal)+" "+L("سعرة","kcal"):e.foods.length+" "+L("صنف","items")}</td></tr>`).join("")}</table>`:`<p>${L("لسه مفيش بيانات","No data yet")}</p>`}</div>`}
+function togFood(id){sel.has(id)?sel.delete(id):sel.add(id);const l=document.getElementById("fl").scrollTop;tmp.notes=document.getElementById("d_notes").value;keep();document.getElementById("fl").scrollTop=l}
+function togSym(k){tmp.sym=tmp.sym||[];const i=tmp.sym.indexOf(k);i>=0?tmp.sym.splice(i,1):tmp.sym.push(k);tmp.notes=document.getElementById("d_notes").value;keep()}
+function saveDiary(){let fib=0,kcal=0;sel.forEach(id=>{fib+=FM[id].fib*FM[id].srv/100;kcal+=FM[id].kcal*FM[id].srv/100});
+ S.diary.push({d:tmp.date||today(),mood:tmp.mood||null,sym:tmp.sym||[],bt:tmp.bt||null,foods:[...sel],fiber:fib,kcal:kcal,notes:document.getElementById("d_notes").value});save();tmp={ok:1};sel=new Set();render()}
+function foodRows(){return flt().map(f=>`<div class="card" style="padding:12px"><b>${pk([f.ar,f.en])}</b> <small>· ${pk(TYPES[f.type])}</small><br><small>${fx(f.fib*f.srv/100)} ${L("جم ألياف لكل حصة","g fiber per serving")} (${f.srv} ${L("جم","g")}) · <b>${Math.round(f.kcal*f.srv/100)}</b> ${L("سعرة","kcal")}</small>
+ ${PLANT.has(f.type)?`<span class="tag">${L("نبات","plant")}</span>`:""}${f.fl.includes("p")?`<span class="tag">${L("بريبايوتك","prebiotic")}</span>`:""}${f.fl.includes("f")?`<span class="tag">${L("مخمّر","fermented")}</span>`:""}</div>`).join("")}
+function foods(){return `<div class="warn">${L("القيم (الألياف والسعرات) تقريبية من جداول عامة وتحتاج مراجعة بجداول الأغذية المصرية. السعرات للحصة كما تؤكل، من غير زيت الطبخ والتتبيلة.","Values (fiber and calories) are approximate from general tables and should be verified against Egyptian food composition tables. Calories are per serving as eaten, excluding cooking oil and dressings.")}</div>
+ <input type="text" placeholder="${L("ابحث عن أكلة","Search a food")}" value="${esc(q)}" oninput="q=this.value;document.getElementById('fd').innerHTML=foodRows()"><div id="fd" style="margin-top:10px">${foodRows()}</div>`}
+
+/* ============ 3-month plan ============ */
+let planTab="today",planDate=null;
+const PHASE=[
+ {w:[1,4],n:["المرحلة 1: التأسيس (الأسابيع 1–4)","Phase 1: Foundation (weeks 1–4)"],d:["تثبيت المواعيد والعادات الصغيرة، وبداية الألياف والمخمّرات بالتدريج.","Lock in routines and small habits, and start fiber and fermented foods gradually."],m:["تنفس بطيء 5 دقائق + نشاط ممتع واحد","5 minutes of slow breathing + one pleasant activity"]},
+ {w:[5,8],n:["المرحلة 2: البناء (الأسابيع 5–8)","Phase 2: Building (weeks 5–8)"],d:["رفع الألياف وتنوع النباتات والنشاط، وتجربة وصفات مخمّرة بيتية.","Raise fiber, plant variety and activity, and try home-fermented recipes."],m:["3 أشياء ممتن لها + تواصل اجتماعي + شمس 15 دقيقة","3 things you are grateful for + social contact + 15 minutes of sunlight"]},
+ {w:[9,12],n:["المرحلة 3: الترسيخ (الأسابيع 9–12)","Phase 3: Consolidation (weeks 9–12)"],d:["الوصول للأهداف الكاملة وتثبيت الروتين ووضع خطة لمنع الانتكاس.","Reach the full targets, make the routine stick and build a relapse-prevention plan."],m:["5 دقائق كتابة أو تأمل + نشاط يعبّر عن قيمك + مراجعة انتصاراتك","5 minutes of journaling or reflection + a values-based activity + review your wins"]}
+];
+const WEEKF=[
+ ["تثبيت مواعيد الأكل والنوم وشرب الماء","Fix meal and sleep times and drink enough water"],
+ ["إضافة خضار لكل غدا وعشا، وتسجيل المزاج يوميًا","Add vegetables to every lunch and dinner, and log mood daily"],
+ ["الزبادي أو الرايب 4 أيام + أول مخلل أو زبادي بيتي","Yogurt or rayeb 4 days + your first homemade pickle or yogurt"],
+ ["تقليل المقليات والمشروبات المحلاة + مراجعة أنماط الشهر الأول","Cut fried food and sweet drinks + review your first-month patterns"],
+ ["رفع الألياف وتنويع النباتات (حوالي 17 نوعًا) + مشي 30 دقيقة","Raise fiber and plant variety (about 17 types) + 30-minute walks"],
+ ["التنشيط السلوكي: نشاط ممتع يوميًا + تواصل اجتماعي","Behavioral activation: a pleasant activity daily + social contact"],
+ ["حبوب كاملة بدل البيضاء + تجربة وصفة مخمّرة جديدة","Whole grains instead of white + try a new fermented recipe"],
+ ["مراجعة الشهر الثاني وتعديل الخطة حسب أنماط المفكرة","Review month two and adjust the plan using your diary patterns"],
+ ["الوصول لـ 30 نوع نبات + تحضير الوجبات مسبقًا","Reach 30 plant types + prepare meals ahead"],
+ ["مهارات التعامل مع التوتر + تمارين قوة مرتين أسبوعيًا","Stress-coping skills + strength training twice a week"],
+ ["خطة منع الانتكاس: عادات وأكلات تحميك وقت الضغط","Relapse-prevention plan: habits and foods that protect you under pressure"],
+ ["تثبيت الروتين وحجز موعد إعادة التقييم","Make the routine stick and book your re-assessment"]
+];
+const DAYTH=[
+ ["يوم التحضير الأسبوعي والبقوليات","Weekly prep and legumes day"],["يوم السمك والخضار","Fish and vegetables day"],["يوم الورقيات والقوة","Leafy greens and strength day"],
+ ["يوم الحبوب الكاملة","Whole grains day"],["يوم الفاكهة والمكسرات والتواصل","Fruit, nuts and connection day"],["يوم الصنف الجديد والمخمّرات البيتية","New plant and home-ferment day"],["يوم الراحة والأسرة والنزهة","Rest, family and outing day"]
+];
+const DAYTIP=[
+ ["انقع العدس أو الحمص من الليلة قبل، وجهّز خضار مقطّعة، وابدأ دفعة زبادي بيتي (الوصفة في المزيد ثم وصفات).","Soak lentils or chickpeas the night before, pre-cut vegetables and start a batch of homemade yogurt (recipe under More, then Recipes)."],
+ ["السمك مرتين أسبوعيًا مصدر جيد للأوميجا 3 الذي يدعم القلب والمخ.","Fish twice a week is a good omega-3 source that supports heart and brain."],
+ ["الورقيات (ملوخية، سبانخ، جرجير) غنية بالألياف والفولات.","Leafy greens (molokhia, spinach, rocket) are rich in fiber and folate."],
+ ["بدّل الأبيض بالكامل: عيش بلدي أو شوفان أو أرز بني أو فريك.","Swap white for whole: baladi bread, oats, brown rice or freekeh."],
+ ["تواصل مع صديق أو قريب اليوم، فالتواصل الاجتماعي يحمي المزاج.","Connect with a friend or relative today; social contact protects mood."],
+ ["جرّب نباتًا لم تأكله هذا الأسبوع (تين، رمان، قلقاس، كراث) لتقترب من 30 نوعًا.","Try a plant you have not eaten this week (fig, pomegranate, taro, leek) to move toward 30 types."],
+ ["راحة نشطة: نزهة في مكان أخضر، وراجع انتصاراتك هذا الأسبوع.","Active rest: a walk somewhere green, and review your wins this week."]
+];
+const ACT={3:[1,3,5],4:[1,2,4,5],5:[0,1,2,4,5]};
+const addDays=(s,n)=>{const d=new Date(s+"T12:00:00");d.setDate(d.getDate()+n);return ymd(d)};
+const dayIdx=date=>Math.round((new Date(date+"T12:00:00")-new Date(S.plan.start+"T12:00:00"))/864e5);
+function planDue(){const d=new Date(S.plan.start+"T12:00:00");d.setMonth(d.getMonth()+3);return ymd(d)}
+function wkT(w,x){const fs=x.gi?12:14,fe=x.gi?20:25;return {fib:Math.round(fs+(fe-fs)*(w-1)/11),plants:Math.round(8+22*(w-1)/11),ferm:w<=2?3:w<=4?4:w<=8?6:7,water:w<=2?6:w<=4?7:8,days:w<=2?3:w<=4?4:5,mins:w<=2?20:w<=4?25:w<=8?30:35}}
+const phaseOf=w=>PHASE.find(p=>w>=p.w[0]&&w<=p.w[1]);
+const fdate=date=>{try{return new Date(date+"T12:00:00").toLocaleDateString(S.lang==="ar"?"ar-EG":"en-GB",{weekday:"long",day:"numeric",month:"long"})}catch(e){return date}};
+
+function dayPlan(date){
+ const A=S.ass[S.ass.length-1],x=mealCtx(A.data,A.r),idx=dayIdx(date),w=Math.min(12,Math.max(1,Math.floor(idx/7)+1)),k=((idx%7)+7)%7,T=wkT(w,x),ph=phaseOf(w);
+ const active=ACT[T.days].includes(k),strength=w>=5&&active&&(k===2||k===5),fermDue=!x.ckd&&k<T.ferm;
+ let theme=DAYTH[k],tip=DAYTIP[k];
+ if(k===0&&x.gi){theme=["يوم التحضير الأسبوعي والخضار المطبوخة","Weekly prep and cooked vegetables day"];tip=["جهّز خضارًا مطبوخًا (جزر، كوسة، سبانخ) في علب، وابدأ دفعة زبادي بيتي.","Pre-cook gentle vegetables (carrot, zucchini, spinach) into boxes and start a batch of homemade yogurt."]}
+ if(k===3&&x.celiac){theme=["يوم الحبوب الكاملة (خالية من الجلوتين)","Whole grains day (gluten-free)"];tip=["أرز بني أو كينوا أو ذرة بدل القمح.","Brown rice, quinoa or corn instead of wheat."]}
+ const slots=[["b",0,"07:30","🍳",L("الفطار","Breakfast")],["s",2,"10:30","🍎",L("سناك","Snack")],["l",1,"13:30","🍲",L("الغدا","Lunch")],["d",3,"19:00","🌙",L("العشا","Dinner")]];
+ const meals={};let tot=0,kc=0;const pl=new Set();let hasF=false;
+ if(!x.ckd)slots.forEach(([s,sh])=>{const p=pool(s,x),m=p[(idx+sh+100*p.length)%p.length];meals[s]=m;m.items.forEach(([id])=>{if(PLANT.has(FM[id].type))pl.add(id);if(FM[id].fl.includes("f"))hasF=true})});
+ const E=energy(A.data,A.r);let raw=0;Object.values(meals).forEach(m=>raw+=mKcal(m,1));const sc=(E.target&&raw)?scaleFor(raw,E.target):1;Object.values(meals).forEach(m=>{tot+=mFib(m,sc);kc+=mKcal(m,sc)});
+ const rows=[];const R=(t,ic,h,b)=>rows.push({t,ic,h,b});
+ R("07:00","🌅",L("الاستيقاظ","Wake up"),`${L("كوب ماء","A glass of water")}${x.constip?L(" دافئ"," (warm)"):""} + ${L("10 دقائق ضوء نهار","10 minutes of daylight")}`);
+ R("07:15","🧘",L("المزاج","Mood"),pk(ph.m));
+ slots.filter(z=>z[0]==="b").forEach(([s,,t,ic,lb])=>R(t,ic,lb,x.ckd?L("حسب خطة طبيبك أو أخصائي الكلى","As per your doctor's or renal dietitian's plan"):`${pk(meals[s].n)} · ${Math.round(mKcal(meals[s],sc))} ${L("سعرة","kcal")} · ${fx(mFib(meals[s],sc))} ${L("جم ألياف","g fiber")}`));
+ slots.filter(z=>z[0]==="s").forEach(([s,,t,ic,lb])=>R(t,ic,lb,x.ckd?"—":`${pk(meals[s].n)} · ${Math.round(mKcal(meals[s],sc))} ${L("سعرة","kcal")} · ${fx(mFib(meals[s],sc))} ${L("جم","g")}`));
+ slots.filter(z=>z[0]==="l").forEach(([s,,t,ic,lb])=>R(t,ic,lb,x.ckd?"—":`${pk(meals[s].n)} · ${Math.round(mKcal(meals[s],sc))} ${L("سعرة","kcal")} · ${fx(mFib(meals[s],sc))} ${L("جم ألياف","g fiber")}`));
+ const actTxt=active?`${L("مشي سريع","Brisk walking")} ${T.mins} ${L("دقيقة","min")}${strength?" + "+L("قوة 15 دقيقة (سكوات، ضغط على الحائط، مطاط)","15 min strength (squats, wall push-ups, bands)"):""}`:L("راحة نشطة: تمدد 10 دقائق ومشي خفيف","Active rest: 10 minutes of stretching and an easy stroll");
+ R("16:30","🚶",L("النشاط","Activity"),actTxt);
+ if(fermDue&&!hasF)R("17:30","🥛",L("جرعة مخمّرة","Fermented serving"),L("كوب زبادي أو رايب، أو 3–4 معالق مخلل متخمّر طبيعيًا","A cup of yogurt or rayeb, or 3–4 spoons of naturally fermented pickles"));
+ slots.filter(z=>z[0]==="d").forEach(([s,,t,ic,lb])=>R(t,ic,lb,x.ckd?"—":`${pk(meals[s].n)} · ${Math.round(mKcal(meals[s],sc))} ${L("سعرة","kcal")} · ${fx(mFib(meals[s],sc))} ${L("جم ألياف","g fiber")}`));
+ R("20:30","💬",L("المزاج والمفكرة","Mood and diary"),L("سجّل مزاجك وأعراضك في المفكرة (30 ثانية) وخصّص وقتًا لنشاط ممتع أو تواصل","Log mood and symptoms in the diary (30 seconds) and make time for a pleasant activity or social contact"));
+ R("22:00","📵",L("استعداد للنوم","Wind down"),L("إغلاق الشاشات وإضاءة هادئة، والنوم 22:30 تقريبًا (7–9 ساعات)","Screens off, dim light, sleep around 22:30 (7–9 hours)"));
+ const tasks=[{id:"water",t:`💧 ${T.water} ${L("أكواب ماء","cups of water")}`}];
+ if(!x.ckd)tasks.push({id:"veg",t:`🥦 ${L("حصتا خضار على الأقل مع الغدا والعشا","At least 2 vegetable servings with lunch and dinner")}`});
+ if(fermDue)tasks.push({id:"ferm",t:`🥛 ${L("جرعة مخمّرة (زبادي، رايب، مخلل متخمّر)","A fermented serving (yogurt, rayeb, fermented pickle)")}`});
+ tasks.push({id:"move",t:`🚶 ${active?T.mins+" "+L("دقيقة نشاط","min of activity"):L("راحة نشطة 10 دقائق","10 min active rest")}`});
+ tasks.push({id:"mood",t:`🧘 ${pk(ph.m)}`});
+ tasks.push({id:"log",t:`📓 ${L("تسجيل المزاج والأكل في المفكرة","Log mood and food in the diary")}`});
+ tasks.push({id:"sleep",t:`😴 ${L("النوم في الميعاد (7–9 ساعات)","Sleep on time (7–9 hours)")}`});
+ return {idx,w,k,T,ph,theme,tip,rows,tasks,tot,kc,E,sc,pl,x,fermDue,hasF,active}}
+function dayDone(date){const P=dayPlan(date),d=(S.plan.done[date]||[]).filter(id=>P.tasks.some(t=>t.id===id)).length;return [d,P.tasks.length]}
+function togTask(date,id){if(date>today())return;const a=S.plan.done[date]=S.plan.done[date]||[],i=a.indexOf(id);i>=0?a.splice(i,1):a.push(id);save();keep()}
+function planStart(){S.plan={start:today(),done:{}};planDate=null;planTab="today";save();keep()}
+function shiftDay(n){const c=planDate||today();let nd=addDays(c,n);const i=dayIdx(nd);if(i<0||i>83)return;planDate=nd;keep()}
+function openWeek(w){planDate=addDays(S.plan.start,(w-1)*7);planTab="today";keep();scrollTo(0,0)}
+function icsDue(){const due=planDue(),dt=due.replace(/-/g,""),en=addDays(due,1).replace(/-/g,"");
+ const txt=["BEGIN:VCALENDAR","VERSION:2.0","PRODID:-//BalancedGut//EN","BEGIN:VEVENT","UID:balancedgut-"+dt+"@balancedgut.app","DTSTAMP:"+new Date().toISOString().replace(/[-:]/g,"").slice(0,15)+"Z","DTSTART;VALUE=DATE:"+dt,"DTEND;VALUE=DATE:"+en,"SUMMARY:"+L("إعادة تقييم معدة رايقة (3 شهور)","Balanced Gut re-assessment (3 months)"),"DESCRIPTION:"+L("افتح التطبيق وابدأ إعادة التقييم لمقارنة تقدمك.","Open the app and start the re-assessment to compare your progress."),"BEGIN:VALARM","TRIGGER:-P3D","ACTION:DISPLAY","DESCRIPTION:Balanced Gut","END:VALARM","END:VEVENT","END:VCALENDAR"].join("\r\n");
+ const a=document.createElement("a");a.href=URL.createObjectURL(new Blob([txt],{type:"text/calendar"}));a.download="balancedgut-reassess.ics";document.body.appendChild(a);a.click();a.remove()}
+
+function plan3(){
+ if(!S.ass.length)return `<div class="card"><h2>🗓️ ${L("خطة الـ 3 شهور","3-month plan")}</h2><p>${L("ابدأ التقييم أولًا لنبني لك خطة تناسب حالتك.","Start the assessment first so we can build a plan that fits you.")}</p><button class="btn" onclick="startAss()">${L("ابدأ التقييم","Start assessment")}</button></div>`;
+ const A=S.ass[S.ass.length-1],r=A.r;
+ if(!S.plan){
+  const x=mealCtx(A.data,A.r);
+  return `${alerts(r)}<div class="card hero"><h2>🗓️ ${L("خطتك لتحسين المزاج والتغذية","Your mood and nutrition plan")}</h2><p>${L("12 أسبوعًا بجدول يومي مفصل: مواعيد، وجبات مصرية، نشاط، ومزاج، مع إعادة التقييم بعد 3 شهور.","12 weeks with a detailed daily schedule: timings, Egyptian meals, activity and mood, with a re-assessment after 3 months.")}</p></div>
+  ${PHASE.map(p=>`<div class="card"><h3 style="margin-top:0">${pk(p.n)}</h3><p>${pk(p.d)}</p><p><b>${L("المزاج:","Mood:")}</b> ${pk(p.m)}</p></div>`).join("")}
+  <div class="card"><h2>${L("مبنية على حالتك","Built on your profile")}</h2><p>${x.ckd?L("بسبب مرض الكلى: الجدول يشمل النوم والنشاط والمزاج فقط، أما الأكل فحسب خطة طبيبك.","Because of kidney disease: the schedule covers sleep, activity and mood only; food follows your doctor's plan."):L("الألياف تبدأ من","Fiber starts at")+" "+wkT(1,x).fib+" "+L("جم وتصل إلى","g and reaches")+" "+wkT(12,x).fib+" "+L("جم يوميًا","g a day")+(x.gi?L(" (أبطأ لحالتك الهضمية)"," (slower for your gut condition)"):"")+(x.celiac?L("، والوجبات خالية من الجلوتين",", with gluten-free meals"):"")+(x.sugar?L("، وقليلة السكريات",", low in sugars"):"")+"."}</p>
+  <button class="btn" onclick="planStart()">${L("ابدأ خطتي اليوم","Start my plan today")}</button></div>
+  <div class="warn">${L("الخطة تثقيفية وتكمّل العلاج الطبي ولا تغني عنه. لو ساء مزاجك أو ظهرت علامات تحذيرية، راجع الطبيب فورًا ولا تنتظر موعد إعادة التقييم.","The plan is educational and complements medical care. If your mood worsens or warning signs appear, see a doctor straight away and do not wait for the re-assessment.")}</div>`}
+ const seg=`<div class="seg">${[["today",L("اليوم","Today")],["weeks",L("الأسابيع","Weeks")],["over",L("نظرة عامة","Overview")]].map(([k,l])=>`<button class="${planTab===k?"on":""}" onclick="planTab='${k}';keep()">${l}</button>`).join("")}</div>`;
+ const T0=dayIdx(today());
+ let body="";
+ if(planTab==="today")body=planToday();else if(planTab==="weeks")body=planWeeks();else body=planOver();
+ return seg+(T0>=84?`<div class="warn"><b>${L("انتهت الـ 12 أسبوعًا!","Your 12 weeks are complete!")}</b> ${L("حان موعد إعادة التقييم.","It is time to re-assess.")} <button class="btn sm" onclick="startAss()">${L("ابدأ إعادة التقييم","Start re-assessment")}</button></div>`:"")+body}
+
+function planToday(){
+ const date=planDate||(dayIdx(today())<0?S.plan.start:dayIdx(today())>83?addDays(S.plan.start,83):today());
+ const P=dayPlan(date),done=S.plan.done[date]||[],can=date<=today(),[dn,dt]=dayDone(date),x=P.x;
+ return `<div class="card"><div style="display:flex;align-items:center;justify-content:space-between"><button class="btn alt sm" onclick="shiftDay(${S.lang==="ar"?1:-1})">${S.lang==="ar"?"▶":"◀"}</button><div style="text-align:center"><b>${fdate(date)}</b><br><small>${L("الأسبوع","Week")} ${P.w} / 12 · ${L("اليوم","Day")} ${P.k+1} / 7${date===today()?" · "+L("اليوم","today"):""}</small></div><button class="btn alt sm" onclick="shiftDay(${S.lang==="ar"?-1:1})">${S.lang==="ar"?"◀":"▶"}</button></div>
+ <h3>${pk(P.theme)}</h3><p>${pk(P.ph.n)}</p><p><b>${L("تركيز الأسبوع:","Week focus:")}</b> ${pk(WEEKF[P.w-1])}</p><div class="why" style="margin-bottom:0">💡 ${pk(P.tip)}</div></div>
+ <div class="card"><h2>🎯 ${L("أهداف اليوم","Today's targets")}</h2>
+ ${x.ckd?`<p>${L("الأكل حسب خطة طبيبك. أهدافك: الماء حسب توجيه طبيبك، النشاط، النوم، المزاج.","Food follows your doctor's plan. Your targets: fluids as advised by your doctor, activity, sleep, mood.")}</p>`:`${P.E&&P.E.target?`<div class="dom"><div class="top"><span>${L("السعرات من وجبات اليوم","Calories from today's meals")}</span><span>${Math.round(P.kc)} / ${P.E.target} ${L("سعرة","kcal")}</span></div><div class="bar"><i class="bg-good" style="width:${Math.min(100,P.kc/P.E.target*100)}%"></i></div>${P.sc!==1?`<small>${L("حجم الحصص ×","Portion size ×")}${P.sc}</small>`:""}</div>`:`<p><small>${L("سعرات وجبات اليوم تقريبًا:","Approx. calories of today's meals:")} ${Math.round(P.kc)}</small></p>`}<div class="dom"><div class="top"><span>${L("الألياف من وجبات اليوم","Fiber from today's meals")}</span><span>${fx(P.tot)} / ${P.T.fib} ${L("جم","g")}</span></div><div class="bar"><i class="bg-${P.tot>=P.T.fib*.9?"good":"fair"}" style="width:${Math.min(100,P.tot/P.T.fib*100)}%"></i></div></div>${(P.w<=4&&P.tot>P.T.fib*1.3)?`<p><small>💡 ${L("الألياف في الوجبات أعلى من هدف أسبوعك. لو الألياف جديدة عليك، ابدأ بنصف حصة من البقوليات والخضار وزِد خلال الأسبوع مع الماء.","The meal fiber is above this week's target. If fiber is new to you, start with half a portion of legumes and vegetables and build up through the week with water.")}</small></p>`:""}
+ <p>🌱 ${L("أنواع النباتات اليوم:","Plant types today:")} ${P.pl.size} · ${L("هدف الأسبوع:","weekly goal:")} ${P.T.plants} ${L("نوعًا","types")}<br>🥛 ${L("مخمّرات:","Fermented:")} ${P.T.ferm} ${L("أيام أسبوعيًا","days a week")} · 💧 ${P.T.water} ${L("أكواب","cups")}</p>`}
+ <p>🚶 ${L("النشاط:","Activity:")} ${P.T.days} ${L("أيام × ","days × ")}${P.T.mins} ${L("دقيقة أسبوعيًا","min a week")}</p></div>
+ <div class="card"><h2>⏰ ${L("جدول اليوم","Today's schedule")}</h2>${P.rows.map(r=>`<div class="act"><b style="flex:none;width:46px;font-size:13px;color:var(--g)">${r.t}</b><div><b>${r.ic} ${r.h}</b><br><span style="color:var(--mu);font-size:14px">${r.b}</span></div></div>`).join("")}
+ ${P.fermDue?`<p><small>${L("وصفات الزبادي والرايب والمخلل البيتي في: المزيد ثم وصفات.","Yogurt, rayeb and pickle recipes are under More, then Recipes.")}</small> <button class="btn alt sm" onclick="go('recipes')">${L("الوصفات","Recipes")}</button></p>`:""}</div>
+ <div class="card"><h2>✅ ${L("قائمة إنجاز اليوم","Today's checklist")} <small>(${dn}/${dt})</small></h2><div class="bar"><i class="bg-good" style="width:${dt?dn/dt*100:0}%"></i></div>
+ ${P.tasks.map(t=>`<label class="opt ${done.includes(t.id)?"sel":""}" style="${can?"":"opacity:.55"}" onclick="togTask('${date}','${t.id}')">${done.includes(t.id)?"✅":"⬜"} ${t.t}</label>`).join("")}
+ ${can?"":`<p><small>${L("يمكنك تعليم المهام في اليوم نفسه أو بعده فقط.","You can tick tasks on the day itself or later only.")}</small></p>`}
+ <button class="btn alt" onclick="go('diary')">📓 ${L("افتح المفكرة","Open the diary")}</button></div>`}
+
+function planWeeks(){
+ const td=today(),cur=Math.floor(dayIdx(td)/7)+1;let TD=0,TT=0;
+ const rows=Array.from({length:12},(_,i)=>{const w=i+1;let d=0,t=0;for(let k=0;k<7;k++){const dt=addDays(S.plan.start,i*7+k);if(dt<=td){const z=dayDone(dt);d+=z[0];t+=z[1]}}TD+=d;TT+=t;return {w,d,t}});
+ const A=S.ass[S.ass.length-1],x=mealCtx(A.data,A.r);
+ return `<div class="card"><h2>${L("تقدمك الكلي","Overall progress")}</h2><div class="big">${TT?Math.round(TD/TT*100):0}%</div><div class="bar"><i class="bg-good" style="width:${TT?TD/TT*100:0}%"></i></div><small>${L("نسبة المهام المنجزة في الأيام الماضية","Share of tasks completed on days so far")}</small></div>`+
+ rows.map(({w,d,t})=>{const T=wkT(w,x),a=addDays(S.plan.start,(w-1)*7),b=addDays(S.plan.start,w*7-1);return `<div class="card" style="${w===cur?"border-color:var(--g);border-width:2px":""}" onclick="openWeek(${w})"><div style="display:flex;justify-content:space-between"><b>${L("الأسبوع","Week")} ${w}${w===cur?" · "+L("الحالي","current"):""}</b><small>${a.slice(5)} → ${b.slice(5)}</small></div>
+ <p style="margin:4px 0">${pk(WEEKF[w-1])}</p>
+ <small>${x.ckd?"":`🌾 ${T.fib} ${L("جم ألياف","g fiber")} · 🌱 ${T.plants} ${L("نوع","types")} · 🥛 ${T.ferm}/7 · `}🚶 ${T.days}×${T.mins}${L("د","m")}</small>
+ ${t?`<div class="bar"><i class="bg-${d/t>=.7?"good":"fair"}" style="width:${d/t*100}%"></i></div><small>${Math.round(d/t*100)}%</small>`:""}</div>`}).join("")}
+
+function planOver(){
+ const A=S.ass[S.ass.length-1],r=A.r,d=A.data,x=mealCtx(d,r),due=planDue(),left=Math.round((new Date(due+"T12:00:00")-new Date(today()+"T12:00:00"))/864e5),w=+d.w;
+ let wt="";
+ if(!r.preg&&!x.ckd){if(r.bmi>=25)wt=L(`إنقاص الوزن المتوقع بالتزام جيد: حوالي ${fx(Math.min(3,w*.04))}–${fx(Math.min(6,w*.08))} كجم خلال 3 شهور (0.25–0.5 كجم أسبوعيًا).`,`Expected weight loss with good adherence: about ${fx(Math.min(3,w*.04))}–${fx(Math.min(6,w*.08))} kg over 3 months (0.25–0.5 kg a week).`);
+  else if(r.bmi<18.5)wt=L("زيادة الوزن المتوقعة: حوالي 3–6 كجم خلال 3 شهور (0.25–0.5 كجم أسبوعيًا) بأكل مفيد.","Expected weight gain: about 3–6 kg over 3 months (0.25–0.5 kg a week) with nutritious food.");
+  else wt=L("الهدف: الحفاظ على وزنك ضمن المدى الصحي.","Goal: keep your weight within the healthy range.")}
+ return `<div class="card"><h2>🏁 ${L("ما الذي تتوقعه بعد 3 شهور؟","What to expect after 3 months")}</h2>
+ ${wt?`<div class="act"><b class="n">1</b><div>${wt}</div></div>`:""}
+ ${x.ckd?"":`<div class="act"><b class="n">2</b><div>${L("الوصول إلى ",  "Reaching ")}${wkT(12,x).fib} ${L("جم ألياف يوميًا و30 نوع نبات أسبوعيًا وجرعة مخمّرة يوميًا.","g of fiber a day, 30 plant types a week and a fermented serving daily.")}</div></div>`}
+ <div class="act"><b class="n">3</b><div>${L("نوم منتظم ونشاط 150 دقيقة أسبوعيًا، وهذا يدعم المزاج وحركة الأمعاء.","Regular sleep and 150 minutes of activity weekly, which supports mood and gut motility.")}</div></div>
+ <div class="act"><b class="n">4</b><div>${L("تحسّن أعراض الهضم والمزاج يحتاج عادة من 8 إلى 12 أسبوعًا من الالتزام، والنتيجة تختلف من شخص لآخر.","Digestive and mood improvements usually take 8–12 weeks of consistency, and results vary between people.")}</div></div></div>
+ <div class="card hero"><h2>📅 ${L("إعادة التقييم بعد 3 شهور","Re-assess after 3 months")}</h2><p>${L("الموعد الموصى به:","Recommended date:")} <b>${fdate(due)}</b> · ${left>0?L("باقي","in")+" "+left+" "+L("يومًا","days"):L("حان الموعد الآن","it is time now")}</p><p>${L("تعيد نفس التقييم لنقارن المحاور الأربعة وBMI وPHQ-9 بنتيجتك الحالية.","You repeat the same assessment so we can compare the four areas, BMI and PHQ-9 with your current result.")}</p>
+ <button class="btn wht" onclick="icsDue()">${L("أضف تذكيرًا للتقويم (.ics)","Add a calendar reminder (.ics)")}</button><button class="btn wht" onclick="startAss()">${L("ابدأ إعادة التقييم","Start re-assessment")}</button></div>
+ ${PHASE.map(p=>`<div class="card"><h3 style="margin-top:0">${pk(p.n)}</h3><p>${pk(p.d)}</p><p><b>${L("المزاج:","Mood:")}</b> ${pk(p.m)}</p></div>`).join("")}
+ <div class="warn">${L("لا تنتظر موعد إعادة التقييم إذا ساء مزاجك، أو ظهر دم في البراز أو فقدان وزن غير مقصود أو ألم يوقظك من النوم. راجع الطبيب فورًا.","Do not wait for the re-assessment if your mood worsens, or you notice blood in stool, unintentional weight loss or pain that wakes you at night. See a doctor straight away.")}</div>
+ <button class="btn alt" onclick="if(confirm(L('إعادة ضبط الخطة وبدء 12 أسبوعًا جديدة؟','Reset the plan and start a new 12 weeks?'))){S.plan=null;save();keep()}">${L("إعادة بدء الخطة","Restart the plan")}</button>`}
+
+/* ============ probiotic recipes ============ */
+const RCP=[
+ {id:"yog",n:["زبادي بيتي بالبكتيريا الحية","Homemade live-culture yogurt"],t:["15 دقيقة تحضير + 6–8 ساعات تخمير","15 min prep + 6–8 h fermenting"],y:["حوالي 1 لتر","About 1 litre"],
+  ing:[["1 لتر لبن كامل أو نصف دسم (الأفضل مبستر)","1 litre whole or half-fat milk (pasteurised is best)"],["2 ملعقة كبيرة زبادي طبيعي حي بدون سكر (كبادئ)","2 tablespoons plain live yogurt with no sugar (starter)"]],
+  st:[["سخّن اللبن حتى يبدأ يغلي برفق ثم اتركه يبرد إلى 40–45°م (تتحمل إصبعك فيه 10 ثوان).","Heat the milk until it just starts to boil, then cool to 40–45°C (your finger tolerates it for 10 seconds)."],["اخلط الكبادئ بكوب من اللبن الدافئ ثم صبّه على باقي اللبن وقلّب.","Mix the starter with a cup of the warm milk, then stir it into the rest."],["غطِّ الإناء ولفّه بقماش سميك واتركه في مكان دافئ 6–8 ساعات دون تحريك.","Cover the pot, wrap it in a thick cloth and leave it somewhere warm for 6–8 hours without stirring."],["ضعه في الثلاجة 4 ساعات قبل التقديم. يحفظ 5–7 أيام، وخذ 2 ملعقة من الدفعة كبادئ للدفعة التالية.","Chill for 4 hours before serving. Keeps 5–7 days; keep 2 spoonfuls as the starter for the next batch."]],
+  note:["التسخين يقتل البكتيريا الحية، فقدّمه بارد ولا تطبخه.","Heat kills live cultures, so serve it cold and do not cook it."],f:["dairy"]},
+ {id:"rayeb",n:["لبن رايب بيتي","Homemade rayeb milk"],t:["10 دقائق + 10–16 ساعة تخمير","10 min + 10–16 h fermenting"],y:["حوالي 1 لتر","About 1 litre"],
+  ing:[["1 لتر لبن (مبستر أو مغلي ومبرّد)","1 litre milk (pasteurised, or boiled and cooled)"],["1–2 ملعقة كبيرة رايب أو زبادي حي كبادئ","1–2 tablespoons live rayeb or yogurt as starter"]],
+  st:[["اغلِ اللبن وبرّده إلى حوالي 40°م.","Boil the milk and cool it to about 40°C."],["أضف الكبادئ وقلّب جيدًا.","Add the starter and stir well."],["غطِّ الإناء واتركه في درجة حرارة الغرفة 10–16 ساعة (أقل في الصيف الحار) حتى يتماسك قليلًا ويصبح طعمه حامضًا خفيفًا.","Cover and leave at room temperature for 10–16 hours (less in hot summer) until slightly set and mildly tangy."],["قلّبه جيدًا وبرّده في الثلاجة، وخفّفه بقليل ماء بارد إن أردت قوامًا أخف.","Stir well and chill; thin with a little cold water if you like it lighter."]],
+  note:["استخدم لبنًا مغليًا أو مبسترًا فقط، ولا تستخدم لبنًا خامًا خصوصًا للحامل والأطفال.","Use boiled or pasteurised milk only, never raw milk, especially for pregnant women and children."],f:["dairy"]},
+ {id:"kefir",n:["كفير اللبن","Milk kefir"],t:["5 دقائق + 18–24 ساعة","5 min + 18–24 h"],y:["حوالي 2 كوب","About 2 cups"],
+  ing:[["1 ملعقة كبيرة حبيبات كفير (من مصدر موثوق)","1 tablespoon kefir grains (from a trusted source)"],["2 كوب لبن مغلي ومبرّد أو مبستر","2 cups boiled-and-cooled or pasteurised milk"]],
+  st:[["ضع الحبيبات واللبن في برطمان زجاج نظيف واملأه حتى ثلثيه.","Put the grains and milk in a clean glass jar, filled to two-thirds."],["غطِّه بقماش مربوط واتركه بعيدًا عن الشمس 18–24 ساعة.","Cover with a cloth tied on and keep it out of sunlight for 18–24 hours."],["صفِّه بمصفاة بلاستيك، واحتفظ بالحبيبات وضعها في لبن جديد.","Strain through a plastic sieve, keep the grains and put them in fresh milk."],["اشرب الكفير بارد. ابدأ بنصف كوب أول مرة.","Drink the kefir cold. Start with half a cup the first time."]],
+  note:["مناسب كإضافة للفطار، لكنه قوي، فابدأ تدريجيًا خصوصًا مع القولون العصبي.","A strong fermented food, so start gradually, especially with IBS."],f:["dairy"]},
+ {id:"pickle",n:["مخلل خيار أو جزر أو لفت بالشمندر (متخمّر بالملح)","Fermented cucumber, carrot or turnip-beet pickles (salt brine)"],t:["20 دقيقة + 3–7 أيام","20 min + 3–7 days"],y:["برطمان 1 لتر","One 1-litre jar"],
+  ing:[["500 جم خيار صغير أو جزر أو لفت مقطّع","500 g small cucumbers, carrots or turnip pieces"],["1 شمندر صغير مقطّع (مع اللفت للون)","1 small beetroot, sliced (with turnip, for colour)"],["2–3 فصوص ثوم","2–3 garlic cloves"],["1 لتر ماء مغلي ومبرّد","1 litre boiled and cooled water"],["30 جم ملح خشن غير معالج باليود (حوالي ملعقتين كبيرتين، والأفضل بالميزان)","30 g coarse non-iodised salt (about 2 tablespoons; weigh it if you can)"]],
+  st:[["ذوّب الملح في الماء لتحصل على محلول ملحي 3%.","Dissolve the salt in the water to make a 3% brine."],["ضع الخضار والثوم في برطمان زجاج نظيف.","Pack the vegetables and garlic into a clean glass jar."],["اسكب المحلول حتى يغطي الخضار تمامًا، وثبّتها تحت السائل بكيس صغير مملوء بمحلول ملحي أو غطاء زجاجي.","Pour in the brine to cover the vegetables completely, and keep them under the liquid with a small brine-filled bag or a glass weight."],["غطِّ بغطاء مرخي واتركه 3–7 أيام بعيدًا عن الشمس (2–4 أيام في الصيف الحار). تذوّق من اليوم الثالث.","Cover loosely and leave out of sunlight for 3–7 days (2–4 in hot summer). Taste from day 3."],["عندما يصبح طعمه حامضًا وفيه فقاعات، أحكم الغطاء وضعه في الثلاجة. يحفظ 1–2 شهر.","When it tastes tangy and bubbly, close the lid and refrigerate. Keeps 1–2 months."]],
+  note:["المخلل المشتري المحفوظ بالخل ليس بروبيوتيك. إن ظهر عفن مُزغّب ملوّن فتخلص من البرطمان كله. الطبقة البيضاء المسطحة تُزال وغالبًا غير ضارة.","Shop pickles kept in vinegar are not probiotic. Discard the whole jar if fuzzy coloured mould appears. A flat white film can be skimmed off and is usually harmless."],f:["salt"]},
+ {id:"kraut",n:["كرنب وجزر مخمّر بالكمون","Fermented cabbage and carrot with cumin"],t:["20 دقيقة + 5–10 أيام","20 min + 5–10 days"],y:["برطمان 1 لتر","One 1-litre jar"],
+  ing:[["1 كجم كرنب مقطّع رفيعًا","1 kg cabbage, thinly shredded"],["1 جزرة مبشورة","1 carrot, grated"],["20 جم ملح خشن (2% من وزن الخضار)","20 g coarse salt (2% of the vegetable weight)"],["1 ملعقة صغيرة كمون حب وفص ثوم (اختياري)","1 teaspoon cumin seeds and a garlic clove (optional)"]],
+  st:[["اعجن الكرنب والجزر مع الملح 5–10 دقائق حتى يخرج سائل.","Massage the cabbage and carrot with the salt for 5–10 minutes until liquid is released."],["اكبسه بقوة في برطمان نظيف حتى يعلوه السائل، ثم ضع ثقلًا فوقه.","Pack it tightly into a clean jar until the liquid rises above it, then weigh it down."],["غطِّ بغطاء مرخي واتركه 5–10 أيام في الظل، وافتح الغطاء يوميًا ليخرج الغاز.","Cover loosely and leave in the shade for 5–10 days, opening the lid daily to release gas."],["عندما يعجبك طعمه الحامض ضعه في الثلاجة. يحفظ أشهرًا.","When you like the sourness, refrigerate. Keeps for months."]],
+  note:["اتركه كطبق جانبي صغير (2–3 ملاعق) في البداية.","Start with a small side serving (2–3 spoonfuls)."],f:["salt"]},
+ {id:"salad",n:["سلطة زبادي بالخيار والنعناع والثوم","Yogurt salad with cucumber, mint and garlic"],t:["10 دقائق","10 min"],y:["2 أكواب","2 servings"],
+  ing:[["1 كوب (200 جم) زبادي حي","1 cup (200 g) live yogurt"],["1 خيارة مفرومة","1 cucumber, chopped"],["1 فص ثوم مهروس (بريبايوتك)","1 garlic clove, crushed (prebiotic)"],["1 ملعقة كبيرة نعناع مفروم أو مجفف","1 tablespoon chopped or dried mint"],["رشة ملح وكمون و1 ملعقة صغيرة زيت زيتون","A pinch of salt and cumin, and 1 teaspoon olive oil"]],
+  st:[["اخلط كل المكونات في طبق.","Mix everything in a bowl."],["اتركها 10 دقائق لتتشرب النكهة، وقدّمها بارد بجانب الغدا.","Rest for 10 minutes so the flavours blend, then serve cold with lunch."]],
+  note:["لا تسخّنها حتى لا تموت البكتيريا الحية.","Do not heat it, so the live cultures survive."],f:["dairy"]},
+ {id:"oats",n:["شوفان بالرايب والتمر (ليلي)","Overnight oats with rayeb and dates"],t:["5 دقائق + ليلة في الثلاجة","5 min + overnight in the fridge"],y:["حصة 1","1 serving"],
+  ing:[["4 ملاعق كبيرة شوفان (40 جم)","4 tablespoons oats (40 g)"],["3/4 كوب لبن رايب (150 جم)","3/4 cup rayeb (150 g)"],["2 حبة تمر مقطّعة","2 dates, chopped"],["1 ملعقة كبيرة لوز مفروم ونصف ملعقة صغيرة قرفة","1 tablespoon chopped almonds and half a teaspoon cinnamon"]],
+  st:[["اخلط الشوفان والرايب والتمر والقرفة في برطمان.","Mix the oats, rayeb, dates and cinnamon in a jar."],["ضعه في الثلاجة 6–8 ساعات.","Refrigerate for 6–8 hours."],["أضف اللوز وقطعة فاكهة قبل الأكل.","Top with almonds and a piece of fruit before eating."]],
+  note:["مرتبط بالبريبايوتك (الشوفان) والبروبيوتيك (الرايب). لمرضى السيلياك استخدم شوفانًا مؤكدًا أنه خالٍ من الجلوتين.","Pairs prebiotic (oats) with probiotic (rayeb). For celiac disease, use certified gluten-free oats."],f:["dairy","gluten"]},
+ {id:"smoothie",n:["سموثي رايب بالموز والشوفان","Rayeb, banana and oat smoothie"],t:["5 دقائق","5 min"],y:["حصة 1","1 serving"],
+  ing:[["1 كوب لبن رايب بارد","1 cup chilled rayeb"],["1 موزة (الأفضل شبه ناضجة)","1 banana (slightly under-ripe is best)"],["2 ملعقة كبيرة شوفان","2 tablespoons oats"],["1 ملعقة صغيرة طحينة وقطع ثلج","1 teaspoon tahini and ice cubes"]],
+  st:[["ضع كل المكونات في الخلاط.","Put everything in the blender."],["اخلط دقيقة واحدة وقدّمه فورًا.","Blend for 1 minute and serve right away."]],
+  note:["الموز شبه الناضج غني بالنشا المقاوم الذي تتغذى عليه بكتيريا الأمعاء.","Slightly under-ripe banana is rich in resistant starch that gut bacteria feed on."],f:["dairy","gluten"]},
+ {id:"dip",n:["صلصة زبادي بالطحينة والبقدونس","Yogurt-tahini and parsley sauce"],t:["5 دقائق","5 min"],y:["4 حصص صغيرة","4 small servings"],
+  ing:[["1/2 كوب زبادي حي","1/2 cup live yogurt"],["2 ملعقة كبيرة طحينة","2 tablespoons tahini"],["1 فص ثوم مهروس وعصير نصف ليمونة","1 crushed garlic clove and juice of half a lemon"],["بقدونس مفروم ورشة ملح","Chopped parsley and a pinch of salt"]],
+  st:[["اخلط كل المكونات حتى تتجانس.","Stir everything until smooth."],["قدّمها مع خضار نيئة أو مشوية، أو مع الفلافل والسمك.","Serve with raw or grilled vegetables, falafel or fish."]],
+  note:["تمنح الخضار طعمًا ألذ فتزيد الكمية التي تأكلها منها.","It makes vegetables tastier, so you tend to eat more of them."],f:["dairy"]}
+];
+function recipes(){
+ const A=S.ass[S.ass.length-1],c=A?(A.data.cond||[]):[],has=id=>c.includes(id);
+ const ctx=[];
+ if(has("htn")||has("ckd"))ctx.push(L("المخلل مرتفع الصوديوم: لا تزد عن 2–3 ملاعق، ومع الضغط أو الكلى استشر طبيبك أولًا.","Pickles are high in sodium: keep to 2–3 spoonfuls, and with blood pressure or kidney problems ask your doctor first."));
+ if(has("celiac"))ctx.push(L("للسيلياك: استخدم شوفانًا مؤكدًا خلوّه من الجلوتين.","For celiac disease: use certified gluten-free oats."));
+ if(has("ibs")||has("ibd"))ctx.push(L("مع القولون العصبي أو الالتهاب المعوي: ابدأ بكميات صغيرة (2–3 ملاعق) وتوقف لو ساءت الأعراض، واسأل طبيبك.","With IBS or IBD: start small (2–3 spoonfuls), stop if symptoms worsen, and ask your doctor."));
+ if(has("t2d"))ctx.push(L("مع السكري: اختر زبادي غير محلّى وقلّل التمر.","With diabetes: choose unsweetened yogurt and go light on dates."));
+ return `<div class="card"><h2>🥛 ${L("وصفات مصرية بروبيوتيك","Egyptian probiotic recipes")}</h2>
+ <p>${L("البروبيوتيك كائنات حية مفيدة تصل للأمعاء بكمية كافية. أفضل مصادرها الغذائية: الزبادي والرايب والكفير والمخلل المتخمّر طبيعيًا. في تجربة نُشرت عام 2021، زاد الأكل المخمّر لمدة 10 أسابيع تنوع الميكروبيوم وخفّض علامات الالتهاب، لكن الاستجابة تختلف من شخص لآخر.","Probiotics are beneficial live microbes that reach the gut in sufficient numbers. The best food sources are yogurt, rayeb, kefir and naturally fermented pickles. In a 2021 trial, 10 weeks of fermented foods increased microbiome diversity and lowered inflammation markers, but responses vary between people.")}</p>
+ <p>${L("اجمعها مع البريبايوتك (ثوم، بصل، كراث، موز، شوفان، بقوليات) لتغذية البكتيريا.","Pair them with prebiotics (garlic, onion, leek, banana, oats, legumes) to feed the bacteria.")}</p></div>
+ <div class="warn"><b>${L("سلامة الغذاء","Food safety")}</b><br>${L("استخدم أوعية زجاج نظيفة ولبنًا مغليًا أو مبسترًا. الحوامل ومن لديهم مناعة ضعيفة أو قسطرة وريدية يستشيرون الطبيب قبل الكفير والمخللات البيتية. تخلّص من أي طعام رائحته أو شكله مريب.","Use clean glass jars and boiled or pasteurised milk. Pregnant women and people with weak immunity or a central line should ask a doctor before kefir and home ferments. Discard anything that smells or looks off.")}${ctx.length?"<br>• "+ctx.join("<br>• "):""}</div>
+ ${RCP.map(rc=>`<details class="rcp"><summary><b>${pk(rc.n)}</b><br><small>⏱ ${pk(rc.t)} · ${pk(rc.y)}${rc.f.includes("dairy")?" · 🥛":""}${rc.f.includes("salt")?" · 🧂":""}</small></summary>
+ <h3>${L("المكونات","Ingredients")}</h3><ul>${rc.ing.map(i=>`<li>${pk(i)}</li>`).join("")}</ul>
+ <h3>${L("الطريقة","Method")}</h3><ol>${rc.st.map(i=>`<li>${pk(i)}</li>`).join("")}</ol>
+ <div class="why" style="margin-bottom:0">💡 ${pk(rc.note)}</div></details>`).join("")}`}
+function more(){return `<div class="grid2"><div class="card tile" onclick="go('recipes')"><span>🥛</span>${L("وصفات بروبيوتيك","Probiotic recipes")}</div><div class="card tile" onclick="go('foods')"><span>🥗</span>${L("قاعدة الأكل","Food database")}</div><div class="card tile" onclick="go('learn')"><span>📚</span>${L("تعلّم","Learn")}</div><div class="card tile" onclick="wipe()"><span>🗑️</span>${L("مسح بياناتي","Delete my data")}</div></div>
+ <div class="warn" style="margin-top:12px">${L("معدة رايقة: تطبيق تثقيفي للفحص المبدئي وليس تشخيصًا طبيًا. بياناتك تبقى على جهازك.","Balanced Gut is an educational app for preliminary screening, not a medical diagnosis. Your data stays on your device.")}</div>`}
+
+/* ============ shell ============ */
+function setLang(l){S.lang=l;save();render()}
+function toggleLang(){setLang(S.lang==="ar"?"en":"ar")}
+function go(v){view=v;tmp={};sel=new Set();q="";render();scrollTo(0,0)}
+function wipe(){if(confirm(L("متأكد؟ سيتم مسح كل شيء من الجهاز.","Sure? Everything will be erased from this device."))){const l=S.lang;S={lang:l,seen:true,ass:[],diary:[],draft:null,plan:null};save();go("home")}}
+function render(){
+ const app=document.getElementById("app"),nav=document.getElementById("nav"),lb=document.getElementById("langbtn");
+ if(!S.lang){document.documentElement.dir="ltr";lb.style.display="none";nav.style.display="none";
+  app.innerHTML=`<div class="card" style="margin-top:30px;text-align:center"><h2 style="font-size:24px">معدة رايقة · Balanced Gut</h2><p>اختر اللغة / Choose language</p><div class="langs"><button class="btn" onclick="setLang('ar')">العربية</button><button class="btn" onclick="setLang('en')">English</button></div></div>`;return}
+ document.documentElement.dir=S.lang==="ar"?"rtl":"ltr";document.documentElement.lang=S.lang;
+ document.getElementById("ttl").textContent=L("معدة رايقة 🌿","Balanced Gut 🌿");lb.style.display="";lb.textContent=S.lang==="ar"?"English":"العربية";
+ if(!S.seen){nav.style.display="none";const x=INTRO[intro];
+  app.innerHTML=`<div class="card slide"><div class="ic">${x.ic}</div><h2>${pk(x.t)}</h2><p>${pk(x.b).replace(/\n/g,"<br>")}</p></div><div class="dots">${INTRO.map((_,i)=>`<i class="${i===intro?"on":""}"></i>`).join("")}</div><div class="navbtns">${intro>0?`<button class="btn alt" onclick="introBack()">${ARB()} ${L("السابق","Back")}</button>`:""}<button class="btn" onclick="introNext()">${intro===INTRO.length-1?L("هيا نبدأ","Let's start")+" ✓":L("التالي","Next")+" "+ARN()}</button></div><p style="text-align:center"><small><a href="#" style="color:var(--mu)" onclick="introSkip();return false">${L("تخطّي","Skip")}</a></small></p>`;return}
+ nav.style.display=view==="ass"?"none":"flex";
+ const tabs=[["home","🏠",L("الرئيسية","Home")],["res","📊",L("نتيجتي","Result")],["plan3","🗓️",L("خطتي","Plan")],["diary","📓",L("المفكرة","Diary")],["more","⋯",L("المزيد","More")]];
+ nav.innerHTML=tabs.map(([k,i,l])=>`<button class="${(view===k||(k==="more"&&["foods","learn","recipes"].includes(view)))?"on":""}" onclick="go('${k}')"><span>${i}</span>${l}</button>`).join("");
+ app.innerHTML=({home,ass,res,diary,foods,learn,plan3,recipes,more})[view]();
+}
+function introBack(){if(intro>0)intro--;render();scrollTo(0,0)}
+function introSkip(){S.seen=true;save();render();scrollTo(0,0)}
+function introNext(){if(intro<INTRO.length-1)intro++;else{S.seen=true;save()}render();scrollTo(0,0)}
+render();
+if("serviceWorker" in navigator)navigator.serviceWorker.register("sw.js").catch(()=>{});
+</script>
+</body>
+</html>
